@@ -27,6 +27,7 @@ pip install -r requirements.txt
 try the demos and have fun. :)
 
 ```python
+export DISPLAY=:0
 python app.py
 ```
 
