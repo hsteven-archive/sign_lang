@@ -7,6 +7,7 @@ American Sign Language (ASL) is a complete, natural language that has the same l
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all the necessary packages.
+Python (>3.7) supported.
 
 First, please download the git files.
 
