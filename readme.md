@@ -18,7 +18,7 @@ Second, install all the required packages with pip.
 
 ```bash
 cd sign_lang
-pip install ./requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -32,6 +32,15 @@ python app.py
 To obtain ground truth data, we have manually annotated ~30K real-world images with 21 3D coordinates, as shown below (we take Z-value from image depth map, if it exists per corresponding coordinate). Here is the hand landmarks.
 
 ![hand_landmarks](docs/hand_landmarks.png)
+
+## Debug
+
+If see the error `no display name and no $DISPLAY environment variable`, 
+please use this commands in your shell.
+
+```shell
+export DISPLAY=:0
+```
 
 ## License
 
