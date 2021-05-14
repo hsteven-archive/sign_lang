@@ -10,7 +10,7 @@
 import numpy as np
 
 class Sign():
-    def __init__(self, accuracy = 0.05):
+    def __init__(self, accuracy = 0.1):
         self.accuracy = accuracy
         self.text = ''
 

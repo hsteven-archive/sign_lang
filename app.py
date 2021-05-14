@@ -41,7 +41,7 @@ def main():
             window['image'].update(data=imgbytes)
 
         if recording:
-            ret, frame = cap.read()
+            _, frame = cap.read()
             frame, text = detect_hands(frame)
             message = message + text
             imgbytes = cv2.imencode('.png', frame)[1].tobytes()  # ditto

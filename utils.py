@@ -17,15 +17,5 @@ def get_xyz(landmarks):
         xyz[i,2] = l.z
     return xyz
 
-def new_text_window():
-    import PySimpleGUI as sg
-
-    layout = [  [sg.Text("Sign language detection")],     # Part 2 - The Layout
-            [sg.Text("Sign language detection")]]
-            
-    window = sg.Window('Text window', layout)
-
-    return window
-
 if __name__ == "__main__":
     pass
