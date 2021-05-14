@@ -2,7 +2,7 @@
 
 American Sign Language (ASL) is a complete, natural language that has the same linguistic properties as spoken languages, with grammar that differs from English. This project is intent to capture the letters or numbers from stream images with power of the artificial intelligence.
 
-![Sign_lang](docs/sign_lang.jpg)
+![Sign_lang](docs/sign_lang.png)
 
 ## Installation
 
