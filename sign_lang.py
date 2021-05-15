@@ -30,6 +30,17 @@ class Sign():
             return True
         else:
             return False
+    
+    def letter_W(self):
+        pinky_pip = self.xyz[18]
+        pinky_mcp = self.xyz[17]
+        thumb_tip = self.xyz[4]
+        if distance(pinky_pip, pinky_mcp) < self.accuracy:
+            if distance(pinky_mcp, thumb_tip) < self.accuracy:
+                return True
+        else
+            return False
+        
 
 def distance(x, y):
     return np.linalg.norm(x - y)
