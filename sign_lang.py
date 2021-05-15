@@ -17,7 +17,7 @@ class Sign():
     def detect(self, xyz):
         self.xyz = xyz
         if self.letter_O():
-            self.text = '0'
+            self.text = 'o'
         else:
             self.text = ''
 
