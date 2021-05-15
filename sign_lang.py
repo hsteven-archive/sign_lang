@@ -41,7 +41,19 @@ class Sign():
         else
             return False
         
-
+    
+    def letter_V(self):
+        pinky_pip = self.xyz[18]
+        pinky_mcp = self.xyz[17]
+        thumb_tip = self.xyz[4]
+        ring_dip = self.xyz[15]
+        ring_pip = self.xyz[14]
+        ring_mcp = self.xyz[13]
+        if distance(pink_pip, pinky_mcp) < self.accuracy and distance(ring_pip, ring_mcp) < self.accuracy and distance(thumb_tip , ring_dip) < self.accuracy:
+            return true
+        else:
+        return false
+    
 def distance(x, y):
     return np.linalg.norm(x - y)
 
