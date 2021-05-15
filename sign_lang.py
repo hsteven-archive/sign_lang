@@ -52,7 +52,7 @@ class Sign():
         if distance(pink_pip, pinky_mcp) < self.accuracy and distance(ring_pip, ring_mcp) < self.accuracy and distance(thumb_tip , ring_dip) < self.accuracy:
             return true
         else:
-        return false
+            return false
     
 def distance(x, y):
     return np.linalg.norm(x - y)
