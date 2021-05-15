@@ -37,12 +37,17 @@ To obtain ground truth data, we have manually annotated ~30K real-world images w
 
 ## Debug
 
-If see the error `no display name and no $DISPLAY environment variable`, 
+- If see the error `no display name and no $DISPLAY environment variable`, 
 please use this commands in your shell.
 
 ```shell
 export DISPLAY=:0
 ```
+
+- If you see the error `* Error performing wm_overrideredirect *` on Macos (>10.15),
+please download the python 3.9.2 directly from python.org and install everything.
+
+Please see the discussion [here](https://github.com/PySimpleGUI/PySimpleGUI/issues/3972)
 
 ## License
 
