@@ -18,6 +18,12 @@ class Sign():
         self.xyz = xyz
         if self.letter_O():
             self.text = 'o'
+        elif self.letter_W():
+            self.text = 'w'
+        elif self.letter_V():
+            self.text = 'v'
+        elif self.letter_L():
+            self.text = 'l'
         else:
             self.text = ''
 
