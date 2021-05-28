@@ -9,6 +9,7 @@ mp_hands = mp.solutions.hands
 sign = Sign()
 
 hands = mp_hands.Hands(
+        max_num_hands=1,
         min_detection_confidence=0.5,
         min_tracking_confidence=0.5)
 

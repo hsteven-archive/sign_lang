@@ -10,7 +10,7 @@ def main():
     # define the window layout
     layout = [[sg.Text('Sign Language Translator', size=(60, 1), justification='center', font='Helvetica 15')],
               [sg.Image(filename='', key='image')],
-              [sg.Text('', size=(60, 5), key='output', font='Helvetica 15')],
+              [sg.Text('', size=(60, 10), key='output', font='Helvetica 15')],
               [sg.Button('Begin', size=(15, 1), font='Helvetica 15'),
                sg.Button('Stop', size=(15, 1), font='Helvetica 15'),
                sg.Button('Exit', size=(15, 1), font='Helvetica 15'), ]]
