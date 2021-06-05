@@ -6,16 +6,24 @@ American Sign Language (ASL) is a complete, natural language that has the same l
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all the necessary packages.
-Python (>3.7) supported.
+`This repository has been tested on Macos Big Sur 11.4 and Ubuntu 20.04 LTS`
 
-First, please download the git files.
+- First, install python (better with version 3.9)
+
+You could use [conda](https://www.anaconda.com/products/individual) to create a new environment
+or directly download from [python 3.9](https://www.python.org/downloads/)
+
+
+- Second, please download the git files.
 
 ```bash
 git clone https://github.com/H-steven/sign_lang.git
 ```
 
-Second, install all the required packages with pip.
+- Third, install all the required packages with pip.
+
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all the necessary packages.
+Python (>=3.7) supported.
 
 ```bash
 cd sign_lang
