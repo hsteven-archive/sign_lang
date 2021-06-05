@@ -1,10 +1,19 @@
+# ======================
+# APP main entrance
+# ======================
+
+# @author: Qi He
+# @date: 2021-06-05
+
+# -*- coding:utf8 -*-
+
 from hands import detect_hands
 import PySimpleGUI as sg
 import cv2
 import numpy as np
 
 def main():
-
+    
     sg.theme('DarkBlue1')
 
     # define the window layout
@@ -15,9 +24,11 @@ def main():
                sg.Button('Stop', size=(15, 1), font='Helvetica 15'),
                sg.Button('Exit', size=(15, 1), font='Helvetica 15'), ]]
 
+    width, height = get_screen_resolutions()
+
     # create the window and show it without the plot
     window = sg.Window('Demo Application - OpenCV Integration',
-                       layout, location=(800, 400))
+                       layout, location=(100, 100))
 
     # ---===--- Event LOOP Read and display frames, operate the GUI --- #
     cap = cv2.VideoCapture(0)
@@ -26,7 +37,7 @@ def main():
     message = ''
 
     while True:
-        event, values = window.read(timeout=20)
+        event, _ = window.read(timeout=20)
         if event == 'Exit' or event == sg.WIN_CLOSED:
             return
 
@@ -44,9 +55,26 @@ def main():
             _, frame = cap.read()
             frame, text = detect_hands(frame)
             message = message + text
-            imgbytes = cv2.imencode('.png', frame)[1].tobytes()  # ditto
+            imgbytes = cv2.imencode('.png', resize(frame, height/2.0))[1].tobytes()  # ditto
             window['image'].update(data=imgbytes)
             window['output'].update(message)
 
+def get_screen_resolutions():
+    import tkinter as tk
 
-main()
+    root = tk.Tk()
+    width, height = root.winfo_screenwidth(), root.winfo_screenheight()
+    root.destroy()
+
+    return width, height
+
+def resize(img, target_height):
+    resize_ratio = float(target_height)/img.shape[0]
+    width = int(img.shape[1] * resize_ratio)
+    height = int(img.shape[0] * resize_ratio)
+    dim = (width, height)
+    img_resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+    return img_resized
+
+if __name__ == "__main__":
+    main()
