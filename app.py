@@ -13,25 +13,25 @@ import cv2
 import numpy as np
 
 def main():
+
+    cap = cv2.VideoCapture(0)
+    width, height = get_frame_resolutions(cap)
     
     sg.theme('DarkBlue1')
 
     # define the window layout
-    layout = [[sg.Text('Sign Language Translator', size=(60, 1), justification='center', font='Helvetica 15')],
+    layout = [[sg.Text('Sign Language Translator', size=(80, 1), justification='center', font='Helvetica 15')],
               [sg.Image(filename='', key='image')],
-              [sg.Text('', size=(60, 10), key='output', font='Helvetica 15')],
-              [sg.Button('Begin', size=(15, 1), font='Helvetica 15'),
-               sg.Button('Stop', size=(15, 1), font='Helvetica 15'),
-               sg.Button('Exit', size=(15, 1), font='Helvetica 15'), ]]
-
-    width, height = get_screen_resolutions()
+              [sg.Text('', size=(80, 10), key='output', font='Helvetica 15')],
+              [sg.Button('Begin', size=(25, 1), font='Helvetica 15'),
+               sg.Button('Stop', size=(25, 1), font='Helvetica 15'),
+               sg.Button('Exit', size=(25, 1), font='Helvetica 15'), ]]
 
     # create the window and show it without the plot
     window = sg.Window('Demo Application - OpenCV Integration',
                        layout, location=(100, 100))
 
     # ---===--- Event LOOP Read and display frames, operate the GUI --- #
-    cap = cv2.VideoCapture(0)
     recording = False
 
     message = ''
@@ -46,7 +46,7 @@ def main():
 
         elif event == 'Stop':
             recording = False
-            img = np.full((480, 640), 255)
+            img = np.full((height, width), 255)
             # this is faster, shorter and needs less includes
             imgbytes = cv2.imencode('.png', img)[1].tobytes()
             window['image'].update(data=imgbytes)
@@ -55,7 +55,7 @@ def main():
             _, frame = cap.read()
             frame, text = detect_hands(frame)
             message = message + text
-            imgbytes = cv2.imencode('.png', resize(frame, height/2.0))[1].tobytes()  # ditto
+            imgbytes = cv2.imencode('.png', resize(frame, (width, height)))[1].tobytes()  # ditto
             window['image'].update(data=imgbytes)
             window['output'].update(message)
 
@@ -68,11 +68,23 @@ def get_screen_resolutions():
 
     return width, height
 
-def resize(img, target_height):
-    resize_ratio = float(target_height)/img.shape[0]
-    width = int(img.shape[1] * resize_ratio)
-    height = int(img.shape[0] * resize_ratio)
-    dim = (width, height)
+def get_camera_resolutions(cap):
+    _, frame = cap.read()
+    width = int(frame.shape[1])
+    height = int(frame.shape[0])
+
+    return width, height
+
+def get_frame_resolutions(cap):
+    screen_width, screen_height = get_screen_resolutions()
+    cam_width, cam_height = get_camera_resolutions(cap)
+    resize_ratio = min(screen_height/2.0/cam_height, screen_width/2.0/cam_width)
+    width = int(cam_width * resize_ratio)
+    height = int(cam_height * resize_ratio)
+
+    return width, height
+
+def resize(img, dim):
     img_resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
     return img_resized
 
