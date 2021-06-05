@@ -19,7 +19,7 @@ Second, install all the required packages with pip.
 
 ```bash
 cd sign_lang
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ## Usage
