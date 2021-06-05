@@ -37,7 +37,7 @@ To obtain ground truth data, we have manually annotated ~30K real-world images w
 
 ## Debug
 
-- If see the error `no display name and no $DISPLAY environment variable`, 
+- If you see the error that `no display name and no $DISPLAY environment variable`, 
 please use this commands in your shell.
 
 ```shell
@@ -45,9 +45,17 @@ export DISPLAY=:0
 ```
 
 - If you see the error `* Error performing wm_overrideredirect *` on Macos (>10.15),
-please download the python 3.9.2 directly from python.org and install everything.
+please download the [python 3.9](https://www.python.org/downloads/) directly from python.org and install everything.
 
 Please see the discussion [here](https://github.com/PySimpleGUI/PySimpleGUI/issues/3972)
+
+- Please ignore the warnings in MacOS like this:
+
+```shell
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+
+W20210605 11:49:06.229305 124948480 tflite_model_loader.cc:32] Trying to resolve path manually as GetResourceContents failed: ; Can't find file: mediapipe/modules/palm_detection/palm_detection.tflite
+```
 
 ## License
 
