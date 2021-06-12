@@ -76,13 +76,14 @@ class Sign():
             return False
         
     def letter_B(self):
-        pinky_mcp = self.xyz[17]
+        ring_mcp = self.xyz[13]
         pinky_dip = self.xyz[19]
         ring_pip = self.xyz[14]
         thumb_tip = self.xyz[4]
         index_pip = self.xyz[6]
         middle_pip = self.xyz[10]
-        if distance(pinky_mcp, thumb_tip) < self.accuracy and distance(ring_pip, pinky_dip) < self.accuracy and distance(middle_pip , mring_pip) < self.accuracy:
+        if distance(ring_mcp, thumb_tip) < self.accuracy and distance(ring_pip, pinky_dip) < self.accuracy and distance(middle_pip , ring_pip) < self.accuracy
+        and distance(index_pip , middle_pip):
             return True
         else:
             return False
