@@ -87,11 +87,23 @@ class Sign():
         else:
             return False
         
+     #palm matrix touchscreen thing
     def palm(self):
         dist1 = distance(self.xyz[0], self.xyz[5])
         dist2 = distance(self.xyz[5], self.xyz[17])
         dist3 = distance(self.xyz[0], self.xyz[17])
-        self.triangle = np.arr([self.xyz[0], self.xyz[5], self.xyz[17]])
+        self.triangle = np.array([self.xyz[0], self.xyz[5], self.xyz[17]])
+        assert len(self.triangle) == 3
+        cosines = np.zeros((3, ))
+        cosines[0] = np.sum(self.triangle[0] * self.triangle[1]) / (np.linalg.norm(self.triangle[0]) * np.linalg.norm(self.triangle[1])) 
+        cosines[1] = np.sum(self.triangle[0] * self.triangle[2]) / (np.linalg.norm(self.triangle[0]) * np.linalg.norm(self.triangle[2]))
+        cosines[2] = np.sum(self.triangle[1] * self.triangle[2]) / (np.linalg.norm(self.triangle[1]) * np.linalg.norm(self.triangle[2]))
+
+        count = np.sum(cosines < 0)
+        if count >= 2:
+            return true
+        else:
+          return false
         
 def distance(x, y):
     return np.linalg.norm(x - y)
