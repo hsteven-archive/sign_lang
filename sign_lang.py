@@ -98,7 +98,6 @@ class Sign():
         cosines[0] = np.sum(self.triangle[0] * self.triangle[1]) / (np.linalg.norm(self.triangle[0]) * np.linalg.norm(self.triangle[1])) 
         cosines[1] = np.sum(self.triangle[0] * self.triangle[2]) / (np.linalg.norm(self.triangle[0]) * np.linalg.norm(self.triangle[2]))
         cosines[2] = np.sum(self.triangle[1] * self.triangle[2]) / (np.linalg.norm(self.triangle[1]) * np.linalg.norm(self.triangle[2]))
-
         count = np.sum(cosines < 0)
         if count >= 2:
             return true
