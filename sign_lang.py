@@ -89,9 +89,6 @@ class Sign():
         
      #palm matrix touchscreen thing
     def palm(self):
-        dist1 = distance(self.xyz[0], self.xyz[5])
-        dist2 = distance(self.xyz[5], self.xyz[17])
-        dist3 = distance(self.xyz[0], self.xyz[17])
         self.triangle = np.array([self.xyz[0], self.xyz[5], self.xyz[17]])
         assert len(self.triangle) == 3
         cosines = np.zeros((3, ))
