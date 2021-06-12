@@ -76,7 +76,7 @@ class Sign():
             return False
         
     def letter_B(self):
-        pinky_mcp = self.xyz[13]
+        pinky_mcp = self.xyz[13] 
         pinky_dip = self.xyz[19]
         ring_pip = self.xyz[14]
         thumb_tip = self.xyz[4]
