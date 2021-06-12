@@ -87,6 +87,8 @@ class Sign():
         else:
             return False
         
+
+
      #palm matrix touchscreen thing
     def palm(self):
         self.triangle = np.array([self.xyz[0], self.xyz[5], self.xyz[17]])
