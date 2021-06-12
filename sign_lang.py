@@ -87,6 +87,12 @@ class Sign():
         else:
             return False
         
+    def palm(self):
+        dist1 = distance(self.xyz[0], self.xyz[5])
+        dist2 = distance(self.xyz[5], self.xyz[17])
+        dist3 = distance(self.xyz[0], self.xyz[17])
+        self.triangle = np.arr([self.xyz[0], self.xyz[5], self.xyz[17]])
+        
 def distance(x, y):
     return np.linalg.norm(x - y)
 
