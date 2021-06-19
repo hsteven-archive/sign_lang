@@ -90,16 +90,16 @@ class Sign():
 
 
      #palm matrix touchscreen thing
-    def palm(self):
+    def palm(self,pt):
+        # form a triangle from the key points indexed by 0, 5, 17
         self.triangle = np.array([self.xyz[0], self.xyz[5], self.xyz[17]])
         assert len(self.triangle) == 3
-        cosines = np.zeros((3, ))
-        thumb_tip = self.xyz[4]
-        ring_tip = self.xyz[16]
-        pinky_tip = self.xyz[20]
-        cosines[0] = np.sum(self.triangle[0] * self.triangle[1]) / (np.linalg.norm(self.triangle[0]) * np.linalg.norm(self.triangle[1])) 
-        cosines[1] = np.sum(self.triangle[0] * self.triangle[2]) / (np.linalg.norm(self.triangle[0]) * np.linalg.norm(self.triangle[2]))
-        cosines[2] = np.sum(self.triangle[1] * self.triangle[2]) / (np.linalg.norm(self.triangle[1]) * np.linalg.norm(self.triangle[2]))
+        vecs = self.triangle - pt
+        
+        cosines = np.zeros((3, )
+        cosines[0] = np.sum(vecs[0] * vecs[1]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[1])) 
+        cosines[1] = np.sum(vecs[0] * vecs[2]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[2]))
+        cosines[2] = np.sum(vecs[1] * vecs[2]) / (np.linalg.norm(vecs[1]) * np.linalg.norm(vecs[2]))
         count = np.sum(cosines < 0)
         if count >= 2:
             return true
