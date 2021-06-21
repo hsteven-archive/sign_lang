@@ -87,8 +87,17 @@ class Sign():
         else:
             return False
         
-
-
+    def letter_D(self):
+        thumb_tip = self.xyz[4]
+        middle_dip = self.xyz[10]
+        thumb_dip = self.xyz[3]
+        middle_tip = self.xyz[12]
+        ring_tip = 
+        if distance(middle_dip,thumb_dip) < self.accuracy and palm(middle_tip) and palm(ring_tip):
+            return True
+        else
+        return False
+ 
      #palm matrix touchscreen thing
     def palm(self,pt):
         # form a triangle from the key points indexed by 0, 5, 17
