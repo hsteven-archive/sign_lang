@@ -145,6 +145,16 @@ class Sign():
                 return True
         else
             return False
+        
+    def letter_Y(self):
+        middle_tip = self.xyz[12]
+        ring_tip = self.xyz[16]
+        index_finger_pip = self.xyz[6]
+        index_finger_mcp = self.xyz[5]
+        if palm(middle_tip) and palm(ring_tip) and distance(index_finger_pip, index_finger_mcp) < self.accuracy:
+            return True
+        else
+        return False
     
      #palm matrix touchscreen thing
     def palm(self,pt):
@@ -152,7 +162,6 @@ class Sign():
         self.triangle = np.array([self.xyz[0], self.xyz[5], self.xyz[17]])
         assert len(self.triangle) == 3
         vecs = self.triangle - pt
-        
         cosines = np.zeros((3, )
         cosines[0] = np.sum(vecs[0] * vecs[1]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[1])) 
         cosines[1] = np.sum(vecs[0] * vecs[2]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[2]))
