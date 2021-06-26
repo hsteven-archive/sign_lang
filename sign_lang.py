@@ -170,17 +170,17 @@ class Sign():
         thumb_tip = self.xyz[4]
         pinky_tip = self.xyz[20]
         pinky_dip = self.xyz[19]
-        thumb_dip = self.xyz[3]
+        thumb_ip = self.xyz[3]
         ring_dip = self.xyz[15]
         index_finger_dip = self.xyz[7]
         middle_dip = self.xyz[10]
         ring_pip = self.xyz[14]
-        if distance(middle_dip, pinky_dip) < self.accuracy and distance(thumb_tip, ring_pip) < self.accuracy and distance(thumb_dip, index_tip) < self.accuracy:
-            if distance(thumb_dip, middle_tip) < self.accuracy and palm(ring_tip):
+        if distance(middle_dip, pinky_dip) < self.accuracy and distance(thumb_tip, ring_pip) < self.accuracy and distance(thumb_ip, index_tip) < self.accuracy:
+            if distance(thumb_ip, middle_tip) < self.accuracy and palm(ring_tip):
                 return True
         return False
     
-    def letter_U:
+    def letter_U(self):
         middle_pip = self.xyz[10]
         index_pip = self.xyz[6]
         ring_tip = self.xyz[16]
@@ -189,6 +189,18 @@ class Sign():
         thumb_tip = self.xyz[4]
         if distance(middle_pip, index_pip) < self.accuracy and distance(pinky_tip, ring_dip) < self.accuracy and distance(ring_dip,thumb_tip) < self.accuracy:
             if palm(ring_tip):
+                return True
+        return False
+        
+    def letter_E(self):
+        middle_tip = self.xyz[12]
+        ring_tip = self.xyz[16]
+        index_finger_tip = self.xyz[8]
+        thumb_tip = self.xyz[4]
+        pinky_tip = self.xyz[20]
+        thumb_ip = self.xyz[3]
+        if distance(middle_tip, thumb_tip) < self.accuracy and distance(index_finger_tip, thumb_tip) < self.accuracy:
+            if distance(ring_tip, thumb_ip) < self.accuracy and distance(pinky_tip, thumb_ip) < self.accuracy:
                 return True
         return False
         
