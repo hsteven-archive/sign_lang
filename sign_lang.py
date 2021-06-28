@@ -15,7 +15,7 @@ class Sign():
         self.text = ''
 
     def detect(self, xyz):
-      self.xyz = xyz
+        self.xyz = xyz
         if self.letter_E():
             self.text = 'e'
         elif self.letter_Y():
@@ -24,6 +24,8 @@ class Sign():
             self.text = 'q'
         elif self.letter_G():
             self.text = 'g'
+        elif self.letter_A():
+            self.text = 'a'
         elif self.letter_I():
             self.text = 'i'
         elif self.letter_N():
@@ -46,8 +48,6 @@ class Sign():
             self.text = 'v'
         elif self.letter_W():
             self.text = 'w'
-        elif self.letter_A():
-            self.text = 'a'
         elif self.letter_L():
             self.text = 'l'
         elif self.letter_B():
