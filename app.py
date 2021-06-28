@@ -21,8 +21,8 @@ def main():
 
     # define the window layout
     layout = [[sg.Text('Sign Language Translator', size=(80, 1), justification='center', font='Helvetica 15')],
-              [sg.Image(filename='', key='image')],
-              [sg.Text('', size=(80, 10), key='output', font='Helvetica 15')],
+              [sg.Image(filename='', key='image'), sg.Text('', size=(2, 1), key='single_letter', font='Helvetica 100')],
+              [sg.Text('', size=(50, 10), key='output', font='Helvetica 30')],
               [sg.Button('Begin', size=(25, 1), font='Helvetica 15'),
                sg.Button('Stop', size=(25, 1), font='Helvetica 15'),
                sg.Button('Exit', size=(25, 1), font='Helvetica 15'), ]]
@@ -57,6 +57,7 @@ def main():
             message = message + text
             imgbytes = cv2.imencode('.png', resize(frame, (width, height)))[1].tobytes()  # ditto
             window['image'].update(data=imgbytes)
+            window['single_letter'].update(text)
             window['output'].update(message)
 
 def get_screen_resolutions():
