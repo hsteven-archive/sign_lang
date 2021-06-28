@@ -24,14 +24,17 @@ class Sign():
             self.text = 'q'
         elif self.letter_G():
             self.text = 'g'
-        elif self.letter_A():
-            self.text = 'a'
-        elif self.letter_I():
-            self.text = 'i'
         elif self.letter_N():
             self.text = 'n'
         elif self.letter_M():
             self.text = 'm'
+        elif self.letter_A():
+            self.text = 'a'
+        elif self.letter_I():
+            self.text = 'i'
+        elif self.letter_O():
+            self.text = "o"
+        
         elif self.letter_K():
             self.text = 'k'
         elif self.letter_F():
