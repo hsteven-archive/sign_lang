@@ -16,8 +16,8 @@ class Sign():
 
     def detect(self, xyz):
         self.xyz = xyz
-        if self.letter_O():
-            self.text = 'o'
+        if self.letter_F():
+            self.text = 'f'
         elif self.letter_W():
             self.text = 'w'
         elif self.letter_V():
@@ -31,7 +31,7 @@ class Sign():
 
         return self.text
         
-    def letter_O(self):
+    def letter_F(self):
         thumb_tip = self.xyz[4]
         index_finger_tip = self.xyz[8]
         if distance(thumb_tip, index_finger_tip) < self.accuracy:
