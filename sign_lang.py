@@ -15,19 +15,32 @@ class Sign():
         self.text = ''
 
     def detect(self, xyz):
-        self.xyz = xyz
-        if self.letter_E():
+                if self.letter_E():
             self.text = 'e'
         elif self.letter_Y():
             self.text = 'y'
+        elif self.letter_Q():
+            self.text = 'q'
+        elif self.letter_G():
+            self.text = 'g'
         elif self.letter_I():
             self.text = 'i'
+        elif self.letter_N():
+            self.text = 'n'
+        elif self.letter_M():
+            self.text = 'm'
+        elif self.letter_K():
+            self.text = 'k'
         elif self.letter_F():
             self.text = 'f'
         elif self.letter_D():
             self.text = 'd'
+        elif self.letter_H():
+            self.text = 'h'
         elif self.letter_U():
             self.text = 'u'
+        elif self.letter_R():
+            self.text = 'r'
         elif self.letter_V():
             self.text = 'v'
         elif self.letter_W():
@@ -42,12 +55,14 @@ class Sign():
             self.text = 'c'
         elif self.letter_P():
             self.text = 'p'
-        elif self.letter_K():
-            self.text = 'k'
+        elif self.letter_X():
+            self.text = 'x'
+        
         else:
             self.text = ''
 
         return self.text
+
         
     def letter_F(self):
         thumb_tip = self.xyz[4]
