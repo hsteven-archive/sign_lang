@@ -94,8 +94,8 @@ class Sign():
         ring_tip = self.xyz[16]
         if distance(middle_dip,thumb_dip) < self.accuracy and palm(middle_tip) and palm(ring_tip):
             return True
-        else
-        return False
+        else:
+            return False
     
     def letter_C(self):
         middle_tip = self.xyz[12]
