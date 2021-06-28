@@ -228,6 +228,18 @@ class Sign():
             return True
         return False
         
+    def letter_T(self):
+        index_tip = self.xyz[8]
+        thumb_ip = self.xyz[3]
+        middle_tip = self.xyz[12]
+        ring_tip = self.xyz[16]
+        pinky_tip = self.xyz[20]
+        if distance(index_tip, thumb_ip) < self.accuracy:
+            if distance(pinky_tip, ring_tip) < self.accuracy:
+                if distance(ring_tip, middle_tip) < self.accuracy:
+                    return True
+        return False
+    
      #palm matrix touchscreen thing
     def palm(self,pt):
         # form a triangle from the key points indexed by 0, 5, 17
@@ -244,6 +256,7 @@ class Sign():
         else:
           return false
         
+                           
 def distance(x, y):
     return np.linalg.norm(x - y)
 
