@@ -305,7 +305,7 @@ class Sign():
         else:
             return False
            
-        def letter_R(self):
+    def letter_R(self):
         index_pip = self.xyz[6]
         middle_pip = self.xyz[10]
         ring_tip = self.xyz[16]
@@ -315,6 +315,42 @@ class Sign():
             return True
         else:
             return False
+        
+    def letter_X(self):
+        ring_tip = self.xyz[16]
+        middle_tip = self.xyz[12]
+        ring_pip = self.xyz[14]
+        pinky_pip = self.xyz[18]
+        thumb_tip = self.xyz[4]
+        index_pip = self.xyz[6]
+        index_dip = self.xyz[7]
+        if self.palm(ring_tip) and self.palm(middle_tip) and distance(pinky_pip, ring_pip) < self.accuracy and distance(thumb_tip, ring_pip) < self.accuracy:
+            if distance(index_pip, index_dip) < self.accuracy:
+                return True
+        else:
+            return False
+        
+        
+    def letter_G(self):
+        thumb_tip = self.xyz[4]
+        index_tip = self.xyz[8]
+        wrist = self.xyz[0]
+        index_mcp = self.xyz[5]
+        pinky_mcp = self.xyz[17]
+        if self.palm_direction(wrist, index_mcp, pinky_mcp)[0] == "right":
+            if distance(index_tip, thumb_tip) < self.accuracy:
+                return True
+        return False
+    def letter_Q(self):
+        thumb_tip = self.xyz[4]
+        index_tip = self.xyz[8]
+        wrist = self.xyz[0]
+        index_mcp = self.xyz[5]
+        pinky_mcp = self.xyz[17]
+        if self.palm_direction(wrist, index_mcp, pinky_mcp)[1] == "down":
+            if distance(index_tip, thumb_tip) < self.accuracy:
+                return True
+        return False
     
      #palm matrix touchscreen thing
     def palm(self,pt):
