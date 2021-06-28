@@ -15,7 +15,8 @@ class Sign():
         self.text = ''
 
     def detect(self, xyz):
-                if self.letter_E():
+      self.xyz = xyz
+        if self.letter_E():
             self.text = 'e'
         elif self.letter_Y():
             self.text = 'y'
@@ -62,7 +63,6 @@ class Sign():
             self.text = ''
 
         return self.text
-
         
     def letter_F(self):
         thumb_tip = self.xyz[4]
