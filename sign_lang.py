@@ -256,6 +256,8 @@ class Sign():
         else:
           return false
         
+    def motion(self):
+        pass
                            
 def distance(x, y):
     return np.linalg.norm(x - y)
