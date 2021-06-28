@@ -16,6 +16,7 @@ class Sign():
 
     def detect(self, xyz):
         self.xyz = xyz
+        self.palm_check()
         if self.letter_E():
             self.text = 'e'
         elif self.letter_Y():
@@ -384,6 +385,11 @@ class Sign():
             if distance(index_tip, thumb_tip) < self.accuracy:
                 return True
         return False
+    def palm_check(self):
+        wrist = self.xyz[0]
+        index_mcp = self.xyz[5]
+        pinky_mcp = self.xyz[17]
+        print(self.palm_direction(wrist, index_mcp, pinky_mcp))
     
      #palm matrix touchscreen thing
     def palm(self,pt):
@@ -405,13 +411,13 @@ class Sign():
         palm_average = (palm2 + palm3)/2
         verticalDirection = ""
         horizontalDirection = ""
-        if palm_average[1] < palm1[1]:
+        if palm_average[1] + 0.15 < palm1[1] :
             verticalDirection = "up"
-        elif palm_average[1] > palm1[1]:
+        elif palm_average[1] > palm1[1] + 0.15:
             verticalDirection = "down"
-        if palm_average[0] < palm1[0]:
+        if palm_average[0] + 0.15 < palm1[0]:
             horizontalDirection = "left"
-        elif palm_average[0] > palm1[0]:
+        elif palm_average[0] > palm1[0] + 0.15:
             horizontalDirection = "right"
         return horizontalDirection, verticalDirection
         
