@@ -33,7 +33,7 @@ class Sign():
         elif self.letter_I():
             self.text = 'i'
         elif self.letter_O():
-            self.text = "o"
+            self.text = 'o'
         
         elif self.letter_K():
             self.text = 'k'
