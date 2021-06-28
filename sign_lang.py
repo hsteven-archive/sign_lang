@@ -212,9 +212,20 @@ class Sign():
         thumb_tip = self.xyz[4]
         pinky_tip = self.xyz[20]
         pinky_dip = self.xyz[19]
-        if distance(thumb_tip, pinky_dip) < self.accuracy and distance(thumb_ip, midd;e_tip) < self.accuracy and distance(thumb_ip, index_tip) < self.accuracy:
+        if distance(thumb_tip, pinky_dip) < self.accuracy and distance(thumb_ip, middle_tip) < self.accuracy and distance(thumb_ip, index_tip) < self.accuracy:
             if distance(thumb_tip, ring_tip) < self.accuracy:
                 return True
+        return False
+    
+    def letter_S(self):
+        ring_tip = self.xyz[16]
+        middle_tip = self.xyz[12]
+        ring_pip = self.xyz[14]
+        thumb_tip = self.xyz[4]
+        thumb_mcp = self.xyz[2]
+        index_dip = self.xyz[7]
+        if distance(ring_pip, thumb_tip) < self.accuracy and distance(thumb_mcp, index_dip) and palm(ring_tip) and palm(middle_tip):
+            return True
         return False
         
      #palm matrix touchscreen thing
