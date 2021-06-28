@@ -152,7 +152,7 @@ class Sign():
         ring_tip = self.xyz[16]
         index_finger_pip = self.xyz[6]
         index_finger_mcp = self.xyz[5]
-        if distance(middle_dip,thumb_tip) < self.accuracy and self.palm(middle_tip) and self.palm(ring_tip):
+        if distance(middle_tip,thumb_tip) < self.accuracy and self.palm(middle_tip) and self.palm(ring_tip):
             return True
         else:
             return False
