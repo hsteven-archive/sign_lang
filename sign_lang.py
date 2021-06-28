@@ -246,7 +246,7 @@ class Sign():
         self.triangle = np.array([self.xyz[0], self.xyz[5], self.xyz[17]])
         assert len(self.triangle) == 3
         vecs = self.triangle - pt
-        cosines = np.zeros((3, )
+        cosines = np.zeros((3))
         cosines[0] = np.sum(vecs[0] * vecs[1]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[1])) 
         cosines[1] = np.sum(vecs[0] * vecs[2]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[2]))
         cosines[2] = np.sum(vecs[1] * vecs[2]) / (np.linalg.norm(vecs[1]) * np.linalg.norm(vecs[2]))
