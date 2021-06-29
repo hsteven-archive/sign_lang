@@ -264,7 +264,8 @@ class Sign():
         middle_tip = self.xyz[12]
         index_tip = self.xyz[8]
         if distance(ring_tip, thumb_tip) < self.accuracy and distance(index_tip, middle_tip) < self.accuracy and distance(pinky_tip, ring_tip) < self.accuracy:
-            return True
+            if self.palm_direction(wrist, middle_pip, index_pip)[1] != "down":
+                return True
         return False
         
     def letter_E(self):
