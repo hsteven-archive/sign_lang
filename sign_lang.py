@@ -22,14 +22,16 @@ class Sign():
             self.text = 'q'
         elif self.letter_G():
             self.text = 'g'
+        elif self.letter_A():
+            self.text = 'a'
         elif self.letter_T():
             self.text = 't'
         elif self.letter_N():
             self.text = 'n'
         elif self.letter_M():
             self.text = 'm'
-        elif self.letter_A():
-            self.text = 'a'
+        elif self.letter_S():
+            self.text = 's'
         elif self.letter_Y():
             self.text = 'y'
         elif self.letter_O():
@@ -60,8 +62,6 @@ class Sign():
             self.text = 'p'
         elif self.letter_X():
             self.text = 'x'
-        elif self.letter_S():
-            self.text = 's'
         
         else:
             self.text = ''
@@ -184,9 +184,10 @@ class Sign():
         thumb_tip = self.xyz[4]
         pinky_tip = self.xyz[20]
         index_finger_mcp = self.xyz[5]
+        index_tip = self.xyz[8]
         thumb_ip = self.xyz[3]
         if self.palm(pinky_tip) and self.palm(ring_tip) and self.palm(middle_tip) and distance(index_finger_pip, index_finger_mcp) < self.accuracy:
-            if distance(index_finger_pip, thumb_ip) < self.accuracy:
+            if distance(index_finger_pip, thumb_ip) < self.accuracy and distance(index_tip, thumb_ip) > self.accuracy:
                 return True
         return False
         
@@ -294,8 +295,8 @@ class Sign():
         ring_pip = self.xyz[14]
         thumb_tip = self.xyz[4]
         thumb_mcp = self.xyz[2]
-        index_dip = self.xyz[7]
-        if distance(ring_pip, thumb_tip) < self.accuracy and distance(thumb_mcp, index_dip) and self.palm(ring_tip) and self.palm(middle_tip):
+        index_tip = self.xyz[8]
+        if distance(ring_pip, thumb_tip) < self.accuracy and distance(thumb_mcp, index_tip) and self.palm(ring_tip) and self.palm(middle_tip):
             return True
         return False
         
