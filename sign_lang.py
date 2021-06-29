@@ -65,6 +65,10 @@ class Sign():
             self.text = 'p'
         elif self.letter_X():
             self.text = 'x'
+        elif self.letter_T():
+            self.text = 't'
+        elif self.letter_S():
+            self.text = 's'
         
         else:
             self.text = ''
