@@ -6,9 +6,7 @@
 # @date: 2021-05-14
 
 # -*- coding:utf8 -*-
-
 import numpy as np
-
 class Sign():
     def __init__(self, accuracy = 0.15):
         self.accuracy = accuracy
@@ -16,29 +14,26 @@ class Sign():
 
     def detect(self, xyz):
         self.xyz = xyz
-        self.palm_check()
         if self.letter_E():
             self.text = 'e'
-        elif self.letter_Y():
-            self.text = 'y'
+        elif self.letter_I():
+            self.text = 'i'
         elif self.letter_Q():
             self.text = 'q'
         elif self.letter_G():
             self.text = 'g'
+        elif self.letter_T():
+            self.text = 't'
         elif self.letter_N():
             self.text = 'n'
         elif self.letter_M():
             self.text = 'm'
         elif self.letter_A():
             self.text = 'a'
-        elif self.letter_I():
-            self.text = 'i'
+        elif self.letter_Y():
+            self.text = 'y'
         elif self.letter_O():
             self.text = 'o'
-        elif self.letter_S():
-            self.text = 's'
-        elif self.letter_T():
-            self.text = "t"
         elif self.letter_K():
             self.text = 'k'
         elif self.letter_F():
@@ -65,8 +60,6 @@ class Sign():
             self.text = 'p'
         elif self.letter_X():
             self.text = 'x'
-        elif self.letter_T():
-            self.text = 't'
         elif self.letter_S():
             self.text = 's'
         
@@ -94,7 +87,7 @@ class Sign():
         if self.palm_direction(wrist, index_mcp, pinky_mcp)[0] == "left":
             if distance(ring_tip, thumb_tip) < self.accuracy:
                 if distance(index_tip, middle_tip) < self.accuracy:
-                    return True 
+                    return True
         return False
     def letter_W(self):
         pinky_pip = self.xyz[18]
@@ -131,7 +124,7 @@ class Sign():
         
     def letter_L(self):
         pinky_pip = self.xyz[18]
-        pinky_mcp = self.xyz[17] 
+        pinky_mcp = self.xyz[17]
         ring_tip = self.xyz[16]
         middle_pip = self.xyz[10]
         middle_mcp = self.xyz[9]
@@ -141,7 +134,7 @@ class Sign():
             return False
         
     def letter_B(self):
-        pinky_mcp = self.xyz[13] 
+        pinky_mcp = self.xyz[13]
         pinky_dip = self.xyz[19]
         ring_pip = self.xyz[14]
         thumb_tip = self.xyz[4]
@@ -210,7 +203,7 @@ class Sign():
         pinky_pip = self.xyz[18]
         pinky_mcp = self.xyz[17]
         if self.palm(ring_tip) and self.palm(middle_tip) and distance(index_finger_pip, index_finger_mcp) < self.accuracy:
-            if  distance(index_finger_dip, thumb_ip) < self.accuracy:
+            if  distance(index_finger_dip, thumb_ip) < self.accuracy and distance(pinky_tip, ring_tip) > self.accuracy:
                 return True
         return False
         
@@ -251,7 +244,7 @@ class Sign():
         ring_pip = self.xyz[14]
         if distance(middle_dip, pinky_dip) < self.accuracy and distance(thumb_tip, ring_pip) < self.accuracy and distance(thumb_ip, index_tip) < self.accuracy:
             if distance(thumb_ip, middle_tip) < self.accuracy and self.palm(ring_tip):
-                return True 
+                return True
         return False
     
     def letter_U(self):
@@ -263,6 +256,7 @@ class Sign():
         thumb_tip = self.xyz[4]
         middle_tip = self.xyz[12]
         index_tip = self.xyz[8]
+        wrist = self.xyz[0]
         if distance(ring_tip, thumb_tip) < self.accuracy and distance(index_tip, middle_tip) < self.accuracy and distance(pinky_tip, ring_tip) < self.accuracy:
             if self.palm_direction(wrist, middle_pip, index_pip)[1] != "down":
                 return True
@@ -308,13 +302,16 @@ class Sign():
     def letter_T(self):
         index_tip = self.xyz[8]
         thumb_ip = self.xyz[3]
+        thumb_tip = self.xyz[4]
         middle_tip = self.xyz[12]
+        middle_pip = self.xyz[10]
         ring_tip = self.xyz[16]
         pinky_tip = self.xyz[20]
         if distance(index_tip, thumb_ip) < self.accuracy:
             if distance(pinky_tip, ring_tip) < self.accuracy:
-                if distance(ring_tip, middle_tip) < self.accuracy:
-                    return True
+                if self.palm(middle_tip) and self.palm(ring_tip):
+                    if distance(thumb_tip, middle_pip) < self.accuracy:
+                        return True
         return False
     
     def letter_P(self):
@@ -390,11 +387,6 @@ class Sign():
             if distance(index_tip, thumb_tip) < self.accuracy:
                 return True
         return False
-    def palm_check(self):
-        wrist = self.xyz[0]
-        index_mcp = self.xyz[5]
-        pinky_mcp = self.xyz[17]
-        print(self.palm_direction(wrist, index_mcp, pinky_mcp))
     
      #palm matrix touchscreen thing
     def palm(self,pt):
@@ -403,7 +395,7 @@ class Sign():
         assert len(self.triangle) == 3
         vecs = self.triangle - pt
         cosines = np.zeros((3))
-        cosines[0] = np.sum(vecs[0] * vecs[1]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[1])) 
+        cosines[0] = np.sum(vecs[0] * vecs[1]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[1]))
         cosines[1] = np.sum(vecs[0] * vecs[2]) / (np.linalg.norm(vecs[0]) * np.linalg.norm(vecs[2]))
         cosines[2] = np.sum(vecs[1] * vecs[2]) / (np.linalg.norm(vecs[1]) * np.linalg.norm(vecs[2]))
         count = np.sum(cosines < 0)
