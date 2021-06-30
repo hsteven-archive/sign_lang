@@ -10,8 +10,11 @@ sign = Sign()
 
 hands = mp_hands.Hands(
         max_num_hands=1,
-        min_detection_confidence=0.5,
+        min_detection_confidence=0.8,
         min_tracking_confidence=0.5)
+
+landmark_drawing_spec = mp_drawing.DrawingSpec(color=(0,0,255), thickness=10, circle_radius=5) #BGR
+connection_drawing_spec = mp_drawing.DrawingSpec(color=(0,255,0), thickness=3, circle_radius=10)
 
 def detect_hands(image, hands=hands):
     
@@ -32,5 +35,8 @@ def detect_hands(image, hands=hands):
             text = sign.detect(xyz)
 
             mp_drawing.draw_landmarks(
-                image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+                image, hand_landmarks, mp_hands.HAND_CONNECTIONS, landmark_drawing_spec, connection_drawing_spec)
     return image, text
+
+def reset_sign():
+    sign.reset()

@@ -11,9 +11,13 @@ class Sign():
     def __init__(self, accuracy = 0.15):
         self.accuracy = accuracy
         self.text = ''
+    
+    def reset(self):
+        self.xyz_history = np.array([]).reshape((-1,21,3))
 
     def detect(self, xyz):
         self.xyz = xyz
+        self.xyz_history = np.vstack((self.xyz_history, xyz[None,:]))
         if self.letter_E():
             self.text = 'e'
         elif self.letter_I():

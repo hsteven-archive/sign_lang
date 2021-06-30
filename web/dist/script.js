@@ -47,13 +47,13 @@ hands.onResults(onResults);
 new ControlPanel(controlsElement, {
     selfieMode: true,
     maxNumHands: 2,
-    minDetectionConfidence: 0.5,
+    minDetectionConfidence: 0.7,
     minTrackingConfidence: 0.5
 })
     .add([
-    new StaticText({ title: 'MediaPipe Hands' }),
+    new StaticText({ title: 'Sign Language Interpreter' }),
     fpsControl,
-    new Toggle({ title: 'Selfie Mode', field: 'selfieMode' }),
+    // new Toggle({ title: 'Selfie Mode', field: 'selfieMode' }),
     new SourcePicker({
         onSourceChanged: () => {
             hands.reset();
@@ -78,24 +78,24 @@ new ControlPanel(controlsElement, {
             images: [],
         }
     }),
-    new Slider({
-        title: 'Max Number of Hands',
-        field: 'maxNumHands',
-        range: [1, 4],
-        step: 1
-    }),
-    new Slider({
-        title: 'Min Detection Confidence',
-        field: 'minDetectionConfidence',
-        range: [0, 1],
-        step: 0.01
-    }),
-    new Slider({
-        title: 'Min Tracking Confidence',
-        field: 'minTrackingConfidence',
-        range: [0, 1],
-        step: 0.01
-    }),
+    // new Slider({
+    //     title: 'Max Number of Hands',
+    //     field: 'maxNumHands',
+    //     range: [1, 4],
+    //     step: 1
+    // }),
+    // new Slider({
+    //     title: 'Min Detection Confidence',
+    //     field: 'minDetectionConfidence',
+    //     range: [0, 1],
+    //     step: 0.01
+    // }),
+    // new Slider({
+    //     title: 'Min Tracking Confidence',
+    //     field: 'minTrackingConfidence',
+    //     range: [0, 1],
+    //     step: 0.01
+    // }),
 ])
     .on(x => {
     const options = x;

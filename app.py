@@ -7,34 +7,41 @@
 
 # -*- coding:utf8 -*-
 
-from hands import detect_hands
+from hands import detect_hands, reset_sign
 import PySimpleGUI as sg
 import cv2
 import numpy as np
+
+step = 50
 
 def main():
 
     cap = cv2.VideoCapture(0)
     width, height = get_frame_resolutions(cap)
     
-    sg.theme('DarkBlue1')
+    sg.theme('DarkBlue')
 
     # define the window layout
-    layout = [[sg.Text('Sign Language Translator', size=(80, 1), justification='center', font='Helvetica 15')],
-              [sg.Image(filename='', key='image'), sg.Text('', size=(2, 1), key='single_letter', font='Helvetica 100')],
-              [sg.Text('', size=(50, 10), key='output', font='Helvetica 30')],
-              [sg.Button('Begin', size=(25, 1), font='Helvetica 15'),
-               sg.Button('Stop', size=(25, 1), font='Helvetica 15'),
-               sg.Button('Exit', size=(25, 1), font='Helvetica 15'), ]]
+    layout = [[sg.Text('Sign Language Translator', size=(80, 1), justification='center', font='Arial 15')],
+              [sg.Image(filename='', key='image'), sg.Text('', size=(2, 1), key='single_letter', font='Arial 300', justification='center')],
+              [sg.Text('', size=(step, 1), key='bar', font='Arial '+str(int(2000/step)))],
+              [sg.Text('Text', size=(10, 1), font='Arial 20')],
+              [sg.Text('', size=(40, 2), key='output', font='Arial 40')],
+              [sg.Button('Begin', size=(40, 1), font='Arial 15'),
+               sg.Button('Stop', size=(40, 1), font='Arial 15'),
+               sg.Button('Exit', size=(40, 1), font='Arial 15'), ]]
 
     # create the window and show it without the plot
     window = sg.Window('Demo Application - OpenCV Integration',
                        layout, location=(100, 100))
 
     # ---===--- Event LOOP Read and display frames, operate the GUI --- #
-    recording = False
+    recording = True
+    bar_time = 0
+    reset_sign()
 
     message = ''
+    all_message = ''
 
     while True:
         event, _ = window.read(timeout=20)
@@ -43,6 +50,8 @@ def main():
 
         elif event == 'Begin':
             recording = True
+            bar_time = 0
+            message = ''
 
         elif event == 'Stop':
             recording = False
@@ -54,11 +63,21 @@ def main():
         if recording:
             _, frame = cap.read()
             frame, text = detect_hands(frame)
-            message = message + text
+            message += text
+            if bar_time > step:
+                if message:
+                    message = message[int(len(message)/4.0):] # Remove the transition period
+                    all_message += max(message, key=message.count)
+                bar_time = 0
+                message = ''
+                reset_sign()
+            else:
+                bar_time += 1
             imgbytes = cv2.imencode('.png', resize(frame, (width, height)))[1].tobytes()  # ditto
             window['image'].update(data=imgbytes)
             window['single_letter'].update(text)
-            window['output'].update(message)
+            window['output'].update(all_message)
+            window['bar'].update('-'*bar_time)
 
 def get_screen_resolutions():
     import tkinter as tk
