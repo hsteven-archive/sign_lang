@@ -28,14 +28,14 @@ class Sign():
             self.text = 'g'
         elif self.letter_A():
             self.text = 'a'
+        elif self.letter_S():
+            self.text = 's'
         elif self.letter_T():
             self.text = 't'
         elif self.letter_N():
             self.text = 'n'
         elif self.letter_M():
             self.text = 'm'
-        elif self.letter_S():
-            self.text = 's'
         elif self.letter_Y():
             self.text = 'y'
         elif self.letter_O():
@@ -48,10 +48,10 @@ class Sign():
             self.text = 'd'
         elif self.letter_H():
             self.text = 'h'
-        elif self.letter_U():
-            self.text = 'u'
         elif self.letter_R():
             self.text = 'r'
+        elif self.letter_U():
+            self.text = 'u'
         elif self.letter_V():
             self.text = 'v'
         elif self.letter_W():
@@ -300,7 +300,9 @@ class Sign():
         thumb_tip = self.xyz[4]
         thumb_mcp = self.xyz[2]
         index_tip = self.xyz[8]
-        if distance(ring_pip, thumb_tip) < self.accuracy and distance(thumb_mcp, index_tip) and self.palm(ring_tip) and self.palm(middle_tip):
+        middle_pip = self.xyz[10]
+        index_pip = self.xyz[6]
+        if distance(ring_pip, thumb_tip) < self.accuracy and distance(thumb_mcp, index_tip) < self.accuracy and self.palm(ring_tip) and self.palm(middle_tip) and distance(index_pip, middle_pip) < self.accuracy:
             return True
         return False
         
@@ -352,7 +354,9 @@ class Sign():
         ring_tip = self.xyz[16]
         thumb_tip = self.xyz[4]
         pinky_dip = self.xyz[19]
-        if self.palm(ring_tip) and distance(index_pip, middle_pip) < self.accuracy and distance(thumb_tip, pinky_dip) < self.accuracy:
+        middle_tip = self.xyz[12]
+        index_tip = self.xyz[8]
+        if self.palm(ring_tip) and distance(index_pip, middle_pip) < self.accuracy and distance(thumb_tip, pinky_dip) < self.accuracy and distance(middle_tip, index_tip) > 0.01:
             return True
         else:
             return False
@@ -360,13 +364,15 @@ class Sign():
     def letter_X(self):
         ring_tip = self.xyz[16]
         middle_tip = self.xyz[12]
-        ring_pip = self.xyz[14]
+        ring_dip = self.xyz[15]
         pinky_pip = self.xyz[18]
         thumb_tip = self.xyz[4]
         index_pip = self.xyz[6]
         index_dip = self.xyz[7]
-        if self.palm(ring_tip) and self.palm(middle_tip) and distance(pinky_pip, ring_pip) < self.accuracy and distance(thumb_tip, ring_pip) < self.accuracy:
-            if distance(index_pip, index_dip) < self.accuracy:
+        index_tip = self.xyz[8]
+        index_mcp = self.xyz[5]
+        if self.palm(ring_tip) and self.palm(middle_tip) and distance(pinky_pip, ring_pip) < self.accuracy and distance(thumb_tip, ring_dip) < self.accuracy:
+            if distance(index_pip, index_dip) < self.accuracy and distance(index_tip, index_dip) < self.accuracy:
                 return True
         else:
             return False
