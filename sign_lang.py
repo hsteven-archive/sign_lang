@@ -18,6 +18,7 @@ class Sign():
     def detect(self, xyz):
         self.xyz = xyz
         self.xyz_history = np.vstack((self.xyz_history, xyz[None,:]))
+        self.demo_xyz_history()
         if self.letter_E():
             self.text = 'e'
         elif self.letter_I():
@@ -398,6 +399,15 @@ class Sign():
             if distance(index_tip, thumb_tip) < self.accuracy:
                 return True
         return False
+
+    # ------ Sample use xyz_history ------
+    def demo_xyz_history(self):
+        # Self.xyz_history the time series history of 21 key points within a fixed time frame
+        # It is an array of shape (frames_num, 21, 3)
+        # frames_num will increase with time goes by, which is also illustrate in GUI with extending dash lines '-'
+        # frames_num will be reset when a new time frame begin, and the maximum number is 50
+        pinky_tip_history_in_2D = self.xyz_history[:,20,:2]
+        print('pinky_tip_history_in_2D shape: ', pinky_tip_history_in_2D.shape)
     
      #palm matrix touchscreen thing
     def palm(self,pt):

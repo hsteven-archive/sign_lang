@@ -10,7 +10,7 @@ sign = Sign()
 
 hands = mp_hands.Hands(
         max_num_hands=1,
-        min_detection_confidence=0.8,
+        min_detection_confidence=0.5,
         min_tracking_confidence=0.5)
 
 landmark_drawing_spec = mp_drawing.DrawingSpec(color=(0,0,255), thickness=10, circle_radius=5) #BGR
