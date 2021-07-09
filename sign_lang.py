@@ -399,6 +399,13 @@ class Sign():
             if distance(index_tip, thumb_tip) < self.accuracy:
                 return True
         return False
+    
+    def letter_J(self):
+        pinky_tip = self.pinky_tip_history_in_2D.shape
+        if pinky_tip == 'j':
+            return true
+        else:
+            return false
 
     # ------ Sample use xyz_history ------
     def demo_xyz_history(self):
@@ -406,8 +413,8 @@ class Sign():
         # It is an array of shape (frames_num, 21, 3)
         # frames_num will increase with time goes by, which is also illustrate in GUI with extending dash lines '-'
         # frames_num will be reset when a new time frame begin, and the maximum number is 50
-        pinky_tip_history_in_2D = self.xyz_history[:,20,:2]
-        print('pinky_tip_history_in_2D shape: ', pinky_tip_history_in_2D.shape)
+        self.pinky_tip_history_in_2D = self.xyz_history[:,20,:2]
+        #print('pinky_tip_history_in_2D shape: ', pinky_tip_history_in_2D.shape)
     
      #palm matrix touchscreen thing
     def palm(self,pt):
