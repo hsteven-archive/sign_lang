@@ -403,9 +403,16 @@ class Sign():
     def letter_J(self):
         pinky_tip = self.pinky_tip_history_in_2D.shape
         if pinky_tip == 'j':
-            return true
+            return True
         else:
-            return false
+            return False
+        
+    def letter_Z(self):
+        index_tip = self.xyz_history[:,8,:2]
+        if index_tip == 'z':
+            return True
+        else:
+            return False
 
     # ------ Sample use xyz_history ------
     def demo_xyz_history(self):
