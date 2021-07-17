@@ -6,8 +6,7 @@
 # @date: 2021-06-05
 
 # -*- coding:utf8 -*-
-
-from hands import detect_hands, reset_sign
+from hands import hands
 import PySimpleGUI as sg
 import cv2
 import numpy as np
@@ -15,7 +14,7 @@ import numpy as np
 step = 50
 
 def main():
-
+    Hands = hands()
     cap = cv2.VideoCapture(0)
     width, height = get_frame_resolutions(cap)
     
@@ -38,7 +37,7 @@ def main():
     # ---===--- Event LOOP Read and display frames, operate the GUI --- #
     recording = True
     bar_time = 0
-    reset_sign()
+    Hands.reset_sign()
 
     message = ''
     all_message = ''
@@ -62,7 +61,7 @@ def main():
 
         if recording:
             _, frame = cap.read()
-            frame, text = detect_hands(frame)
+            frame, text = Hands.detect_hands(frame)
             message += text
             if bar_time > step:
                 if message:
