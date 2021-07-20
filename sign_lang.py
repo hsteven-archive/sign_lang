@@ -10,7 +10,7 @@ import numpy as np
 class Sign():
     def __init__(self, xyz, accuracy=0.15):
         self.xyz = xyz
-        self.xyz_history = np.vstack((self.xyz_history, xyz[None,:]))
+        #self.xyz_history = np.vstack((self.xyz_history, xyz[None,:]))
         self.accuracy = accuracy
         self.text = ''
         self.wrist = self.xyz[0]
@@ -18,11 +18,13 @@ class Sign():
         self.thumb_mcp = self.xyz[2]
         self.thumb_ip = self.xyz[3]
         self.thumb_tip = self.xyz[4]
+        self.index_mcp = self.xyz[5]
         self.index_pip = self.xyz[6]
         self.index_dip = self.xyz[7]
         self.index_tip = self.xyz[8]
         self.middle_mcp = self.xyz[9]
         self.middle_pip = self.xyz[10]
+        self.middle_dip = self.xyz[11]
         self.middle_tip = self.xyz[12]
         self.ring_mcp = self.xyz[13]
         self.ring_pip = self.xyz[14]
@@ -37,7 +39,7 @@ class Sign():
         self.xyz_history = np.array([]).reshape((-1,21,3))
 
     def detect(self):
-        self.demo_xyz_history()
+        #self.demo_xyz_history()
         if self.letter_E():
             self.text = 'e'
         elif self.letter_I():
@@ -93,7 +95,7 @@ class Sign():
         return self.text
         
     def letter_F(self):
-        if distance(self.thumb_tip, self.index_tip) < self.accuracy:
+        if distance(self.thumb_tip, self.index_tip) < self.accuracy and distance(self.index_tip,self.wrist) > distance(self.thumb_tip, self.wrist):
             return True
         else:
             return False
@@ -119,13 +121,13 @@ class Sign():
 
         
     def letter_L(self):
-        if distance(self.pinky_pip, self.pinky_mcp) < self.accuracy and self.palm(self.ring_tip) and distance(self.middle_pip , self.middle_mcp) < self.accuracy:
+        if distance(self.pinky_pip, self.pinky_mcp) < self.accuracy and self.palm(self.ring_tip) and distance(self.middle_pip , self.middle_mcp) < self.accuracy and distance(self.index_tip,self.wrist) > distance(self.thumb_tip, self.wrist):
             return True
         else:
             return False
         
     def letter_B(self):
-        if distance(self.pinky_mcp, self.thumb_tip) < self.accuracy and distance(self.ring_pip, self.pinky_dip) < self.accuracy and distance(self.middle_pip , self.index_pip) < self.accuracy:
+        if distance(self.ring_pip, self.pinky_dip) < self.accuracy and distance(self.middle_pip , self.index_pip) < self.accuracy and distance(self.index_tip,self.wrist) > distance(self.thumb_tip, self.wrist):
             return True
         else:
             return False
@@ -164,12 +166,12 @@ class Sign():
     
     def letter_K(self):
         if self.palm(self.ring_tip) and distance(self.pinky_tip, self.ring_dip) < self.accuracy and distance(self.thumb_tip, self.index_pip) < self.accuracy:
-            if distance(self.thumb_tip, self.middle_pip) < self.accuracy:
+            if distance(self.thumb_tip, self.middle_pip) < self.accuracy and distance(self.index_tip,self.wrist) > distance(self.thumb_tip, self.wrist):
                 return True
         return False
     
     def letter_N(self):
-        if distance(self.middle_dip, self.pinky_dip) < self.accuracy and distance(self.thumb_tip, self.ring_pip) < self.accuracy and distance(self.thumb_ip, index_tip) < self.accuracy:
+        if self.palm(self.pinky_tip) and distance(self.thumb_tip, self.ring_pip) < self.accuracy and distance(self.thumb_ip, self.index_tip) < self.accuracy:
             if distance(self.thumb_ip, self.middle_tip) < self.accuracy and self.palm(self.ring_tip):
                 return True
         return False
@@ -187,13 +189,13 @@ class Sign():
         return False
     
     def letter_M(self):
-        if distance(self.thumb_tip, self.pinky_dip) < self.accuracy and distance(self.thumb_ip, self.middle_tip) < self.accuracy and distance(self.thumb_ip, self.index_tip) < self.accuracy:
-            if distance(self.thumb_tip, self.ring_tip) < self.accuracy:
+        if distance(self.thumb_tip, self.pinky_pip) < self.accuracy and distance(self.thumb_ip, self.middle_tip) < self.accuracy and distance(self.thumb_ip, self.index_tip) < self.accuracy:
+            if distance(self.thumb_ip, self.ring_tip) < self.accuracy:
                 return True
         return False
     
     def letter_S(self):
-        if distance(self.ring_pip, self.thumb_tip) < self.accuracy and distance(self.thumb_mcp, self.index_tip) < self.accuracy and self.palm(self.ring_tip) and self.palm(self.middle_tip) and distance(self.index_pip, self.middle_pip) < self.accuracy:
+        if distance(self.ring_pip, self.thumb_tip) < self.accuracy and distance(self.thumb_mcp, self.index_tip) < self.accuracy and self.palm(self.ring_tip) and self.palm(self.middle_tip) and distance(self.index_pip, self.middle_pip) < self.accuracy and distance(self.index_tip,self.wrist) < distance(self.thumb_tip, self.wrist):
             return True
         return False
         
@@ -244,14 +246,14 @@ class Sign():
                 return True
         return False
 
-    # ------ Sample use xyz_history ------
-    def demo_xyz_history(self):
-        # Self.xyz_history the time series history of 21 key points within a fixed time frame
-        # It is an array of shape (frames_num, 21, 3)
-        # frames_num will increase with time goes by, which is also illustrate in GUI with extending dash lines '-'
-        # frames_num will be reset when a new time frame begin, and the maximum number is 50
-        pinky_tip_history_in_2D = self.xyz_history[:,20,:2]
-        print('pinky_tip_history_in_2D shape: ', pinky_tip_history_in_2D.shape)
+#    # ------ Sample use xyz_history ------
+#    def demo_xyz_history(self):
+#        # Self.xyz_history the time series history of 21 key points within a fixed time frame
+#        # It is an array of shape (frames_num, 21, 3)
+#        # frames_num will increase with time goes by, which is also illustrate in GUI with extending dash lines '-'
+#        # frames_num will be reset when a new time frame begin, and the maximum number is 50
+#        pinky_tip_history_in_2D = self.xyz_history[:,20,:2]
+#        print('pinky_tip_history_in_2D shape: ', pinky_tip_history_in_2D.shape)
     
      #palm matrix touchscreen thing
     def palm(self,pt):
