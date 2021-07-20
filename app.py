@@ -69,7 +69,7 @@ def main():
                     all_message += max(message, key=message.count)
                 bar_time = 0
                 message = ''
-                reset_sign()
+                Hands.reset_sign()
             else:
                 bar_time += 1
             imgbytes = cv2.imencode('.png', resize(frame, (width, height)))[1].tobytes()  # ditto
