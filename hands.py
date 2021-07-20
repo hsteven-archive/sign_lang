@@ -8,18 +8,18 @@ import numpy as np
 class hands:
     
     def __init__(self):
-        mp_drawing = mp.solutions.drawing_utils
-        mp_hands = mp.solutions.hands
+        self.mp_drawing = mp.solutions.drawing_utils
+        self.mp_hands = mp.solutions.hands
         #mp_hands
         
         self.sign = Sign(np.zeros((21, 3)))
-        self.hands = mp_hands.Hands(
+        self.hands = self.mp_hands.Hands(
             max_num_hands=1,
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5)
 
-        landmark_drawing_spec = mp_drawing.DrawingSpec(color=(0,0,255), thickness=10, circle_radius=5) #BGR
-        connection_drawing_spec = mp_drawing.DrawingSpec(color=(0,255,0), thickness=3, circle_radius=10)
+        self.landmark_drawing_spec = self.mp_drawing.DrawingSpec(color=(0,0,255), thickness=10, circle_radius=5) #BGR
+        self.connection_drawing_spec = self.mp_drawing.DrawingSpec(color=(0,255,0), thickness=3, circle_radius=10)
 
     def detect_hands(self, image):
     
@@ -38,10 +38,10 @@ class hands:
                 xyz = get_xyz(hand_landmarks.landmark)
                 self.sign = Sign(xyz)
             # ---------- Output from the sign language detector
-                text = self.sign.detect(xyz)
+                text = self.sign.detect()
 
-                mp_drawing.draw_landmarks(
-                image, hand_landmarks, mp_hands.HAND_CONNECTIONS, landmark_drawing_spec, connection_drawing_spec)
+                self.mp_drawing.draw_landmarks(
+                image, hand_landmarks, self.mp_hands.HAND_CONNECTIONS, self.landmark_drawing_spec, self.connection_drawing_spec)
         return image, text
 
     def reset_sign(self):
