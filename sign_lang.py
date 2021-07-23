@@ -82,12 +82,12 @@ class Sign():
             self.text = 'w'
         elif self.letter_L():
             self.text = 'l'
+        elif self.letter_P():
+            self.text = 'p'
         elif self.letter_B():
             self.text = 'b'
         elif self.letter_C():
             self.text = 'c'
-        elif self.letter_P():
-            self.text = 'p'
         else:
             self.text = ''
 
@@ -234,7 +234,7 @@ class Sign():
             else:
                 return False
         if self.palm(self.ring_tip) and self.palm(self.middle_tip) and distance(self.pinky_pip, self.ring_pip) < self.accuracy and distance(self.thumb_tip, self.ring_pip) < self.accuracy and np.abs(distance(self.index_pip,self.wrist) - distance(self.index_tip,self.wrist)) < self.accuracy:
-            if not _collinear(self.index_tip, self.index_mcp,self.index_dip) and not self.palm(self.index_tip):
+            if not _collinear(self.index_tip, self.index_mcp,self.index_dip) and not self.palm(self.index_tip) and not distance(self.index_tip,self.thumb_tip) < self.accuracy and not distance(self.index_tip,self.middle_dip) < self.accuracy:
                 return True
         else:
             return False
