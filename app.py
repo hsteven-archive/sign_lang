@@ -11,7 +11,7 @@ import PySimpleGUI as sg
 import cv2
 import numpy as np
 
-step = 50
+step = 10
 
 def main():
     Hands = hands()
