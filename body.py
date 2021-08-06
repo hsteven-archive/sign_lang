@@ -17,7 +17,7 @@ class body:
                         min_tracking_confidence=0.5)
 
         self.landmark_drawing_spec = self.mp_drawing.DrawingSpec(color=(0,0,255), thickness=10, circle_radius=5) #BGR
-        self.connection_drawing_spec = self.mp_drawing.DrawingSpec(color=(0,255,0), thickness=3, circle_radius=10)
+        self.connection_drawing_spec = self.mp_drawing.DrawingSpec(color=(255,0,0), thickness=3, circle_radius=10)
 
     def detect_body(self, image):
     
@@ -29,14 +29,14 @@ class body:
         # Draw the hand annotations on the image.
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        self.mp_drawing.draw_landmarks(
-            image, results.face_landmarks, self.mp_holistic.FACE_CONNECTIONS)
+        # self.mp_drawing.draw_landmarks(
+        #     image, results.face_landmarks, self.mp_holistic.FACE_CONNECTIONS, self.landmark_drawing_spec, self.connection_drawing_spec)
         # self.mp_drawing.draw_landmarks(
         #     image, results.left_hand_landmarks, self.mp_holistic.HAND_CONNECTIONS)
         # self.mp_drawing.draw_landmarks(
         #     image, results.right_hand_landmarks, self.mp_holistic.HAND_CONNECTIONS)
         self.mp_drawing.draw_landmarks(
-            image, results.pose_landmarks, self.mp_holistic.POSE_CONNECTIONS)
+            image, results.pose_landmarks, self.mp_holistic.POSE_CONNECTIONS, self.landmark_drawing_spec, self.connection_drawing_spec)
         image = cv2.flip(image, 1)
         return image, text
 
