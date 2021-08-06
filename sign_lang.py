@@ -6,6 +6,7 @@
 # @date: 2021-05-14
 
 # -*- coding:utf8 -*-
+from traceback import print_stack
 import numpy as np
 class Sign():
     def __init__(self, xyz, accuracy=0.15):
@@ -91,6 +92,8 @@ class Sign():
         else:
             self.text = ''
 
+        # tips = [self.palm(self.pinky_tip), self.palm(self.ring_tip), self.palm(self.middle_tip), self.palm(self.index_tip)] 
+        # print(tips)
         return self.text
         
     def letter_F(self):

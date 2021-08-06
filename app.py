@@ -6,15 +6,20 @@
 # @date: 2021-06-05
 
 # -*- coding:utf8 -*-
+from numpy.core.numeric import full
+from segments import segment
+from body import body
 from hands import hands
 import PySimpleGUI as sg
 import cv2
 import numpy as np
 
-step = 10
+step = 50
 
 def main():
     Hands = hands()
+    Body = body()
+    Segment = segment()
     cap = cv2.VideoCapture(0)
     width, height = get_frame_resolutions(cap)
     
@@ -28,7 +33,11 @@ def main():
               [sg.Text('', size=(40, 2), key='output', font='Arial 40')],
               [sg.Button('Begin', size=(40, 1), font='Arial 15'),
                sg.Button('Stop', size=(40, 1), font='Arial 15'),
-               sg.Button('Exit', size=(40, 1), font='Arial 15'), ]]
+               sg.Button('Exit', size=(40, 1), font='Arial 15')],
+              [sg.Button('Remove Background', size=(30, 1), font='Arial 15'),
+               sg.Button('Add Background', size=(30, 1), font='Arial 15'),
+               sg.Button('Add full body', size=(30, 1), font='Arial 15'),
+               sg.Button('Remove full body', size=(30, 1), font='Arial 15')]]
 
     # create the window and show it without the plot
     window = sg.Window('Demo Application - OpenCV Integration',
@@ -41,9 +50,24 @@ def main():
 
     message = ''
     all_message = ''
+    background = True
+    full_body = False
 
     while True:
         event, _ = window.read(timeout=20)
+
+        if event == 'Remove Background':
+            background = False
+        
+        if event == 'Add Background':
+            background = True
+
+        if event == 'Add full body':
+            full_body = True
+        
+        if event == 'Remove full body':
+            full_body = False
+
         if event == 'Exit' or event == sg.WIN_CLOSED:
             return
 
@@ -61,7 +85,11 @@ def main():
 
         if recording:
             _, frame = cap.read()
+            if not background:
+                frame = Segment.seg(frame)
             frame, text = Hands.detect_hands(frame)
+            if full_body:
+                frame, _ = Body.detect_body(frame)
             message += text
             if bar_time > step:
                 if message:
