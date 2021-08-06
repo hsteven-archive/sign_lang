@@ -15,8 +15,8 @@ class hands:
         self.sign = Sign(np.zeros((21, 3)))
         self.hands = self.mp_hands.Hands(
             max_num_hands=1,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5)
+            min_detection_confidence=0.85,
+            min_tracking_confidence=0.85)
 
         self.landmark_drawing_spec = self.mp_drawing.DrawingSpec(color=(0,0,255), thickness=10, circle_radius=5) #BGR
         self.connection_drawing_spec = self.mp_drawing.DrawingSpec(color=(0,255,0), thickness=3, circle_radius=10)
