@@ -39,10 +39,12 @@ class Sign():
     def reset(self):
         self.xyz_history = np.array([]).reshape((-1,21,3))
 
-    def detect(self):
+def detect(self):
         #self.demo_xyz_history()
         if self.letter_E():
             self.text = 'e'
+        elif self.letter_P():
+            self.text = 'p'
         elif self.letter_X():
             self.text = 'x'
         elif self.letter_I():
@@ -83,8 +85,6 @@ class Sign():
             self.text = 'w'
         elif self.letter_L():
             self.text = 'l'
-        elif self.letter_P():
-            self.text = 'p'
         elif self.letter_B():
             self.text = 'b'
         elif self.letter_C():
@@ -92,6 +92,8 @@ class Sign():
         else:
             self.text = ''
 
+        return self.text
+        
         # tips = [self.palm(self.pinky_tip), self.palm(self.ring_tip), self.palm(self.middle_tip), self.palm(self.index_tip)] 
         # print(tips)
         return self.text
