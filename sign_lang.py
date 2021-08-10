@@ -39,7 +39,7 @@ class Sign():
     def reset(self):
         self.xyz_history = np.array([]).reshape((-1,21,3))
 
-def detect(self):
+    def detect(self):
         #self.demo_xyz_history()
         if self.letter_E():
             self.text = 'e'
