@@ -234,7 +234,7 @@ class Sign():
 
     def letter_L(self):
 
-        if self.palm(self.ring_tip) and self.touching(self.middle_tip,self.ring_tip,self.accuracy):
+        if self.palm(self.ring_tip) and self.touching(self.middle_tip,self.ring_tip,self.accuracy) and not self.touching(self.ring_pip, self.thumb_tip,self.accuracy):
             if not self.palm(self.index_tip) and not self.palm(self.thumb_tip):
                 return True
 
@@ -378,7 +378,7 @@ class Sign():
 
     def letter_S(self):
 
-        if self.distance(self.ring_pip, self.thumb_tip) < self.accuracy and self.distance(self.thumb_mcp, self.index_tip) < self.accuracy and self.palm(self.ring_tip) and self.palm(self.middle_tip) and self.distance(self.index_pip, self.middle_pip) < self.accuracy and self.distance(self.index_tip,self.wrist) < self.distance(self.thumb_tip, self.wrist):
+        if self.touching(self.ring_pip, self.thumb_tip,self.accuracy):
 
             return True
 
@@ -427,7 +427,7 @@ class Sign():
 
     def letter_R(self):
 
-        if self.touching(self.index_tip,self.middle_tip,self.accuracy) and self.touching(self.ring_tip, self.thumb_tip,self.accuracy):
+        if self.touching(self.index_pip,self.middle_pip,self.accuracy) and not self.touching(self.index_tip,self.middle_tip,0.05) and self.touching(self.ring_tip, self.thumb_tip,self.accuracy):
 
             return True
 
@@ -438,20 +438,6 @@ class Sign():
         
 
     def letter_X(self):
-
-        def _collinear(a,b,c):
-
-            m1 = (b[1]-a[1])/(b[0]-a[0])
-
-            m2 = (c[1]-b[1])/(c[0]-b[0])
-
-            if np.abs(m1 - m2) <=0.05:
-
-                return True
-
-            else:
-
-                return False
 
         if self.palm(self.ring_tip) and self.palm(self.middle_tip) and self.distance(self.pinky_pip, self.ring_pip) < self.accuracy and self.distance(self.thumb_tip, self.ring_pip) < self.accuracy and np.abs(self.distance(self.index_pip,self.wrist) - self.distance(self.index_tip,self.wrist)) < self.accuracy:
 
@@ -572,7 +558,7 @@ class Sign():
         return horizontalDirection, verticalDirection
 
         
-
+     
                            
 
     def distance(self,x, y):
@@ -585,7 +571,16 @@ def check_dist():
 
     sign = Sign()
 
-    
+def _collinear(a,b,c):
+        m1 = (b[1]-a[1])/(b[0]-a[0])
+        m2 = (c[1]-b[1])/(c[0]-b[0])
+        if np.abs(m1 - m2) <=0.05:
+
+            return True
+
+        else:
+
+            return False
 
 
 
