@@ -1,4 +1,4 @@
-# ======================
+    # ======================
 
 # Sign language detection
 
@@ -215,7 +215,7 @@ class Sign():
     def letter_H(self):
 
         if self.palm_direction(self.wrist, self.index_mcp, self.pinky_mcp)[0] == "left":
-                if self.touching(self.index_tip, self.middle_tip, self.accuracy) and not self.touching(self.ring_tip,self.middle_tip,self.accuracy):
+                if self.touching(self.index_tip, self.middle_tip, self.accuracy) and not self.touching(self.ring_tip,self.middle_tip,self.accuracy) and not self.touching(self.index_tip,self.middle_tip,self.accuracy*0.65):
                     return True
 
         return False
@@ -271,7 +271,7 @@ class Sign():
     def letter_C(self):
 
         if not self.palm(self.pinky_tip) and not self.palm(self.index_tip) and not self.palm(self.ring_tip) and not self.palm(self.middle_tip) and not self.touching(self.thumb_tip, self.middle_tip, self.accuracy):
-            if self.touching(self.pinky_tip, self.ring_tip, self.accuracy):
+            if self.touching(self.pinky_tip, self.ring_tip, self.accuracy) and self.touching(self.index_tip,self.middle_tip,self.accuracy):
                 if not self.palm(self.thumb_tip):
                     if self.palm_direction(self.wrist, self.index_mcp, self.pinky_mcp)[1] == "up":
                         return True
@@ -282,8 +282,8 @@ class Sign():
 
     def letter_V(self):
 
-        if self.distance(self.pinky_pip, self.pinky_mcp) < self.accuracy and self.distance(self.ring_pip, self.ring_mcp) < self.accuracy and self.distance(self.thumb_tip , self.pinky_dip) < self.accuracy and self.distance(self.thumb_tip, self.ring_dip) < self.accuracy and not self.palm(self.middle_tip) and self.distance(self.middle_tip, self.index_tip) > 2*self.accuracy:
-
+        if not self.touching(self.index_tip,self.middle_tip,self.accuracy*1.2):
+            if self.touching(self.ring_tip,self.thumb_tip,self.accuracy):
                 return True
 
         else:
@@ -297,8 +297,9 @@ class Sign():
         if self.palm(self.pinky_tip) and self.palm(self.ring_tip) and self.palm(self.middle_tip):
 
             if self.distance(self.index_pip, self.thumb_tip) < self.accuracy:
+                if self.touching(self.index_tip,self.middle_tip,self.accuracy):
 
-                return True
+                    return True
 
         return False
 
@@ -307,7 +308,7 @@ class Sign():
         
 
     def letter_I(self):
-        if self.touching(self.thumb_tip, self.index_pip, self.accuracy *1.3):
+        if self.touching(self.thumb_tip, self.index_pip, self.accuracy *1.3) and self.palm_direction(self.wrist, self.index_mcp, self.pinky_mcp)[1] == "up":
             if not self.palm(self.pinky_tip):
                 if self.palm(self.middle_tip):
                     return True
@@ -318,8 +319,7 @@ class Sign():
 
     def letter_Y(self):
 
-        if self.palm(self.middle_tip) and self.palm(self.ring_tip) and self.distance(self.index_pip, self.index_mcp) < self.accuracy and not self.distance(self.index_dip, self.thumb_ip) < self.accuracy:
-
+        if not self.touching(self.pinky_tip,self.thumb_tip,self.accuracy*5):
             return True
 
         return False
@@ -337,7 +337,7 @@ class Sign():
 
     def letter_N(self):
 
-        if self.touching(self.index_tip,self.thumb_ip,self.accuracy):
+        if self.touching(self.index_tip,self.thumb_ip,self.accuracy) and self.touching(self.middle_tip,self.thumb_ip,self.accuracy):
             if self.palm(self.ring_tip):
                 return True
 
@@ -348,7 +348,6 @@ class Sign():
     def letter_U(self):
 
         if self.distance(self.ring_tip, self.thumb_tip) < self.accuracy and self.distance(self.index_tip, self.middle_tip) < self.accuracy and self.distance(self.pinky_tip, self.ring_tip) < self.accuracy:
-
             if self.palm_direction(self.wrist, self.middle_pip, self.index_pip)[1] != "down":
                 if not self.touching(self.middle_tip, self.ring_tip, self.accuracy):
                     return True
@@ -368,9 +367,10 @@ class Sign():
     def letter_M(self):
 
         if self.touching(self.middle_tip,self.thumb_ip,self.accuracy):
-            if self.palm(self.pinky_tip):
+            if self.touching(self.index_tip,self.thumb_ip,self.accuracy):
+                if self.palm(self.pinky_tip):
 
-                return True
+                    return True
 
         return False
 
@@ -378,7 +378,7 @@ class Sign():
 
     def letter_S(self):
 
-        if self.touching(self.ring_pip, self.thumb_tip,self.accuracy):
+        if self.touching(self.ring_pip, self.thumb_tip,self.accuracy) and self.palm(self.middle_tip):
 
             return True
 
@@ -388,27 +388,19 @@ class Sign():
 
     def letter_T(self):
 
-        if self.distance(self.index_tip, self.thumb_ip) < self.accuracy:
-
-            if self.distance(self.pinky_tip, self.ring_tip) < self.accuracy:
-
-                if self.palm(self.middle_tip) and self.palm(self.ring_tip):
-
-                    if self.distance(self.thumb_tip, self.middle_pip) < self.accuracy:
-
-                        return True
-
+        if self.touching(self.index_tip,self.thumb_ip,self.accuracy):
+            if not self.touching(self.middle_tip,self.thumb_ip,self.accuracy):
+                return True;
         return False
 
     
 
     def letter_P(self):
-        print(self.distance(self.thumb_tip,self.middle_pip))
-        print(self.accuracy)
         if self.palm_direction(self.wrist, self.index_mcp, self.pinky_mcp)[1] == "down":
 
             if self.touching(self.thumb_tip,self.middle_pip,self.accuracy * 1.5) or self.touching(self.thumb_tip,self.middle_dip,self.accuracy * 1.5):
-                return True
+                if self.touching(self.middle_tip,self.index_tip,self.accuracy*2):
+                    return True
         return False
 
     
@@ -426,10 +418,11 @@ class Sign():
            
 
     def letter_R(self):
-
-        if self.touching(self.index_pip,self.middle_pip,self.accuracy) and not self.touching(self.index_tip,self.middle_tip,0.05) and self.touching(self.ring_tip, self.thumb_tip,self.accuracy):
-
-            return True
+        print(self.index_tip[0])
+        print(self.middle_tip[0])
+        if self.touching(self.index_tip,self.middle_tip,self.accuracy)  and self.touching(self.ring_tip, self.thumb_tip,self.accuracy):
+            if self.index_tip[0]+0.02 >self.middle_tip[0]:
+                return True
 
         else:
 
@@ -439,11 +432,10 @@ class Sign():
 
     def letter_X(self):
 
-        if self.palm(self.ring_tip) and self.palm(self.middle_tip) and self.distance(self.pinky_pip, self.ring_pip) < self.accuracy and self.distance(self.thumb_tip, self.ring_pip) < self.accuracy and np.abs(self.distance(self.index_pip,self.wrist) - self.distance(self.index_tip,self.wrist)) < self.accuracy:
-
-            if not _collinear(self.index_tip, self.index_mcp,self.index_dip) and not self.palm(self.index_tip) and not self.distance(self.index_tip,self.thumb_tip) < self.accuracy and not self.distance(self.index_tip,self.middle_dip) < self.accuracy:
-
-                return True
+        if self.touching(self.middle_dip,self.thumb_tip,self.accuracy):
+                if not self.palm(self.index_tip):
+                    if self.palm(self.ring_tip):
+                        return True
 
         else:
 
@@ -455,10 +447,8 @@ class Sign():
 
     def letter_G(self):
 
-        if self.palm_direction(self.wrist, self.index_mcp, self.pinky_mcp)[0] == "right":
-
-            if self.distance(self.index_tip, self.thumb_tip) < self.accuracy:
-
+        if self.touching(self.thumb_tip,self.index_dip,self.accuracy) and self.palm_direction(self.wrist, self.index_mcp, self.pinky_mcp)[0] == "left":
+            if not self.palm(self.index_tip):
                 return True
 
         return False
@@ -469,7 +459,7 @@ class Sign():
 
         if self.palm_direction(self.wrist, self.index_mcp, self.pinky_mcp)[1] == "down":
 
-            if self.distance(self.index_tip, self.thumb_tip) < self.accuracy:
+            if self.touching(self.index_dip, self.thumb_tip ,self.accuracy):
 
                 return True
 
@@ -547,7 +537,7 @@ class Sign():
 
             verticalDirection = "down"
 
-        if palm_average[0] < palm1[0] and (palm1[0]-palm_average[0]) + 0.5 > palm1[1]-palm_average[1]:
+        if palm_average[0] < palm1[0]-0.1:
 
             horizontalDirection = "left"
 

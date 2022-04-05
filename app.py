@@ -26,7 +26,7 @@ def main():
 
     # define the window layout
     layout = [[sg.Text('Sign Language Translator', size=(80, 1), justification='center', font='Arial 15')],
-              [sg.Image(filename='', key='image', size = (500,500)), sg.Image(filename='sign_lang.png', key='langkey'), sg.Text('', size=(40, 2), key='letter', font='Arial 40'), sg.Text('', size=(40, 2), key='output', font='Arial 40')], 
+              [sg.Image(filename='', key='image', size = (800,800)), sg.Image(filename='sign_lang.png', key='langkey'), sg.Text('', size=(40, 2), key='letter', font='Arial 40'), sg.Text('', size=(40, 2), key='output', font='Arial 40')], 
               [sg.Text('', size=(step, 1), key='bar', font='Arial '+str(int(2000/step)))],
               [sg.Text('Text', size=(10, 1), font='Arial 20')],
               [sg.Button('Begin', size=(40, 1), font='Arial 15'),
