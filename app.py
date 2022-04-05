@@ -13,8 +13,9 @@ from hands import hands
 import PySimpleGUI as sg
 import cv2
 import numpy as np
-
-step = 50
+import os
+import collections
+step = 30
 
 def main():
     Hands = hands()
@@ -28,7 +29,7 @@ def main():
     layout = [[sg.Text('Sign Language Translator', size=(80, 1), justification='center', font='Arial 15')],
               [sg.Image(filename='', key='image', size = (800,800)), sg.Image(filename='sign_lang.png', key='langkey'), sg.Text('', size=(40, 2), key='letter', font='Arial 40'), sg.Text('', size=(40, 2), key='output', font='Arial 40')], 
               [sg.Text('', size=(step, 1), key='bar', font='Arial '+str(int(2000/step)))],
-              [sg.Text('Text', size=(10, 1), font='Arial 20')],
+              [sg.Text('', size=(50, 1), key='message', font='Arial 20')],
               [sg.Button('Begin', size=(40, 1), font='Arial 15'),
                sg.Button('Stop', size=(40, 1), font='Arial 15'),
                sg.Button('Exit', size=(40, 1), font='Arial 15')],
@@ -45,12 +46,12 @@ def main():
     recording = True
     bar_time = 0
     Hands.reset_sign()
-
     message = ''
     all_message = ''
     background = True
     full_body = False
-
+    count = 5
+    messageOnScreen = ''
     while True:
         event, _ = window.read(timeout=20)
 
@@ -82,27 +83,44 @@ def main():
             window['image'].update(data=imgbytes)
 
         if recording:
+            
             _, frame = cap.read()
             if not background:
                 frame = Segment.seg(frame)
             frame, text = Hands.detect_hands(frame)
+
             if full_body:
                 frame, _ = Body.detect_body(frame)
+            if 'i' in message and text == "j":
+                message += "j"
+            if text == "j" and not 'i' in message:
+                text = ""
             message += text
             if bar_time > step:
                 if message:
                     message = message[int(len(message)/4.0):] # Remove the transition period
                     all_message += max(message, key=message.count)
                 bar_time = 0
-                message = ''
+                # message = ''
+                print(message)
+                if 'j' in message:
+                    messageOnScreen += 'j'
+                elif 'z' in message:
+                    messageOnScreen += 'z'
+                elif len(collections.Counter(message).most_common()) > 0:
+                    messageOnScreen += collections.Counter(message).most_common(1)[0][0]
+
                 Hands.reset_sign()
+                message = ''
             else:
                 bar_time += 1
             imgbytes = cv2.imencode('.png', resize(frame, (width, height)))[1].tobytes()  # ditto
+
             window['letter'].update(text)
             window['image'].update(data=imgbytes)
             window['output'].update(all_message)
             window['bar'].update('-'*bar_time)
+            window['message'].update(messageOnScreen)
 
 def get_screen_resolutions():
     import tkinter as tk

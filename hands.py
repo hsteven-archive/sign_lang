@@ -20,7 +20,9 @@ class hands:
 
         self.landmark_drawing_spec = self.mp_drawing.DrawingSpec(color=(0,0,255), thickness=10, circle_radius=5) #BGR
         self.connection_drawing_spec = self.mp_drawing.DrawingSpec(color=(0,255,0), thickness=3, circle_radius=10)
-
+        self.xyz_history = np.array([]).reshape((-1,21,3))
+    def record_history(self):
+        self.xyz_history = np.vstack((self.xyz_history, self.sign.xyz[None,:]))
     def detect_hands(self, image):
     
         text = ''
@@ -39,10 +41,25 @@ class hands:
                 self.sign = Sign(xyz)
             # ---------- Output from the sign language detector
                 text = self.sign.detect()
-
+                if text == "z":
+                    if self.letter_Z(self.xyz_history):
+                        text = "z"
+                    else:
+                        text = ""
+                    
                 self.mp_drawing.draw_landmarks(
                 image, hand_landmarks, self.mp_hands.HAND_CONNECTIONS, self.landmark_drawing_spec, self.connection_drawing_spec)
+                self.record_history()
+                
         return image, text
 
+    def distance(self,x, y):
+        return np.linalg.norm(x - y)
+    def letter_Z(self, xyz_history):
+        print(xyz_history)
+        if len(xyz_history) > 4:
+            if self.distance((xyz_history[len(xyz_history)-2][8]), xyz_history[len(xyz_history)-3][8]) > 0.13:
+                return True
+        return False
     def reset_sign(self):
         self.sign.reset()

@@ -18,9 +18,10 @@ from traceback import print_stack
 
 import numpy as np
 
+
 class Sign():
 
-    def __init__(self, xyz,accuracy=0.3):
+    def __init__(self, xyz,accuracy=0.3 ):
 
         self.xyz = xyz
 
@@ -75,9 +76,9 @@ class Sign():
             
 
     
-
+    def record_history(self):
+        self.xyz_history = np.vstack((self.xyz_history, xyz[None,:]))
     def reset(self):
-
         self.xyz_history = np.array([]).reshape((-1,21,3))
 
 
@@ -85,8 +86,11 @@ class Sign():
     def detect(self):
 
         #self.demo_xyz_history()
-        if self.letter_N():
-
+        if self.letter_Jend():
+            self.text = 'j'
+        
+        elif self.letter_N():
+        
             self.text = 'n'
         elif self.letter_M():
 
@@ -146,6 +150,8 @@ class Sign():
         elif self.letter_K():
 
             self.text = 'k'
+        elif self.letter_Z():
+            self.text = 'z'
 
         elif self.letter_F():
 
@@ -199,7 +205,11 @@ class Sign():
         return self.text
 
         
-
+    def letter_Z(self):
+        if self.touching(self.thumb_tip, self.middle_pip,self.accuracy):
+            if not self.touching(self.index_tip,self.middle_pip,self.accuracy):
+                return True
+        return False
     def letter_F(self):
 
         if self.touching(self.thumb_tip, self.index_tip,self.accuracy) and self.distance(self.index_tip,self.wrist) > self.distance(self.thumb_tip, self.wrist):
@@ -209,8 +219,6 @@ class Sign():
         else:
 
             return False
-
-    
 
     def letter_H(self):
 
@@ -230,7 +238,7 @@ class Sign():
 
         return False
 
-        
+    
 
     def letter_L(self):
 
@@ -290,7 +298,10 @@ class Sign():
 
             return False
 
-            
+    def letter_Jend(self):
+        if self.pinky_tip[0] < self.thumb_tip[0]:
+            return True
+        return False
 
     def letter_A(self):
 
@@ -329,7 +340,7 @@ class Sign():
     def letter_K(self):
 
         if self.palm(self.ring_tip):
-            if self.touching(self.thumb_tip,self.index_pip,self.accuracy*1.2):
+            if self.touching(self.thumb_tip,self.middle_pip,self.accuracy*1.2):
                 return True
         return False
 
@@ -418,8 +429,6 @@ class Sign():
            
 
     def letter_R(self):
-        print(self.index_tip[0])
-        print(self.middle_tip[0])
         if self.touching(self.index_tip,self.middle_tip,self.accuracy)  and self.touching(self.ring_tip, self.thumb_tip,self.accuracy):
             if self.index_tip[0]+0.02 >self.middle_tip[0]:
                 return True
@@ -467,21 +476,20 @@ class Sign():
 
 
 
-#    # ------ Sample use xyz_history ------
+    # ------ Sample use xyz_history ------
 
-#    def demo_xyz_history(self):
+    def demo_xyz_history(self):
 
-#        # Self.xyz_history the time series history of 21 key points within a fixed time frame
+        # Self.xyz_history the time series history of 21 key points within a fixed time frame
 
-#        # It is an array of shape (frames_num, 21, 3)
+        # It is an array of shape (frames_num, 21, 3)
 
-#        # frames_num will increase with time goes by, which is also illustrate in GUI with extending dash lines '-'
+        # frames_num will increase with time goes by, which is also illustrate in GUI with extending dash lines '-'
 
-#        # frames_num will be reset when a new time frame begin, and the maximum number is 50
+        # frames_num will be reset when a new time frame begin, and the maximum number is 50
 
-#        pinky_tip_history_in_2D = self.xyz_history[:,20,:2]
-
-#        print('pinky_tip_history_in_2D shape: ', pinky_tip_history_in_2D.shape)
+        pinky_tip_history_in_2D = self.xyz_history[:,20,:2]
+        print('pinky_tip_history_in_2D shape: ', pinky_tip_history_in_2D.shape)
 
     
 
