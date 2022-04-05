@@ -11,7 +11,7 @@ import numpy as np
 class Sign():
     def __init__(self, xyz, accuracy=0.15):
         self.xyz = xyz
-        #self.xyz_history = np.vstack((self.xyz_history, xyz[None,:]))
+        self.xyz_history = np.vstack((self.xyz_history, xyz[None,:]))
         self.accuracy = accuracy
         self.text = ''
         self.wrist = self.xyz[0]
