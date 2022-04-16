@@ -88,7 +88,8 @@ class Sign():
         #self.demo_xyz_history()
         if self.letter_Jend():
             self.text = 'j'
-        
+        elif self.letter_Zend():
+            self.text = 'z'
         elif self.letter_N():
         
             self.text = 'n'
@@ -150,9 +151,6 @@ class Sign():
         elif self.letter_K():
 
             self.text = 'k'
-        elif self.letter_Z():
-            self.text = 'z'
-
         elif self.letter_F():
 
             self.text = 'f'
@@ -205,11 +203,6 @@ class Sign():
         return self.text
 
         
-    def letter_Z(self):
-        if self.touching(self.thumb_tip, self.middle_pip,self.accuracy):
-            if not self.touching(self.index_tip,self.middle_pip,self.accuracy):
-                return True
-        return False
     def letter_F(self):
 
         if self.touching(self.thumb_tip, self.index_tip,self.accuracy) and self.distance(self.index_tip,self.wrist) > self.distance(self.thumb_tip, self.wrist):
@@ -452,7 +445,14 @@ class Sign():
 
         
 
-        
+    def letter_Zend(self):
+        if self.touching(self.middle_tip, self.thumb_tip, self.accuracy) and not self.palm(self.index_tip):
+            if self.index_tip[0] > self.middle_pip[0]:
+                return True
+
+        else:
+
+            return False
 
     def letter_G(self):
 

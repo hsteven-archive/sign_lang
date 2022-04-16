@@ -95,6 +95,10 @@ def main():
                 message += "j"
             if text == "j" and not 'i' in message:
                 text = ""
+            if 'd' in message and text == 'z':
+                message += "z"
+            if text == "z" and not 'd' in message:
+                text = ""
             message += text
             if bar_time > step:
                 if message:

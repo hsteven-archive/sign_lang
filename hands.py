@@ -41,12 +41,6 @@ class hands:
                 self.sign = Sign(xyz)
             # ---------- Output from the sign language detector
                 text = self.sign.detect()
-                if text == "z":
-                    if self.letter_Z(self.xyz_history):
-                        text = "z"
-                    else:
-                        text = ""
-                    
                 self.mp_drawing.draw_landmarks(
                 image, hand_landmarks, self.mp_hands.HAND_CONNECTIONS, self.landmark_drawing_spec, self.connection_drawing_spec)
                 self.record_history()
@@ -55,11 +49,5 @@ class hands:
 
     def distance(self,x, y):
         return np.linalg.norm(x - y)
-    def letter_Z(self, xyz_history):
-        print(xyz_history)
-        if len(xyz_history) > 4:
-            if self.distance((xyz_history[len(xyz_history)-2][8]), xyz_history[len(xyz_history)-3][8]) > 0.13:
-                return True
-        return False
     def reset_sign(self):
         self.sign.reset()
