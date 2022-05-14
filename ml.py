@@ -9,7 +9,7 @@ from ml.sign_lang_model import SignLangModel
 # define a video capture object
 vid = cv2.VideoCapture(0)
 gray = None
-model = SignLangModel() 
+model = SignLangModel()
 model.load_state_dict(torch.load('ml/model_trained.pt'))
 while(True):
       
@@ -19,8 +19,7 @@ while(True):
   
     # Display the resulting frame
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    cv2.imshow('frame', gray)
-      
+    gray = ToTensor()
     # the 'q' button is set as the
     # quitting button you may use any
     # desired button of your choice
@@ -35,3 +34,4 @@ while(True):
 vid.release()
 # Destroy all the windows
 cv2.destroyAllWindows()
+
