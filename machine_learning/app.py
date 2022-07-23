@@ -3,77 +3,104 @@ import torchvision
 import torchvision.transforms as T
 import torch.nn as nn
 import torch.nn.functional as F
+import copy 
 import cv2
 import numpy as np
 
 
-class SignLangModel(nn.Module):
-  def __init__(self):	
-    super(SignLangModel, self).__init__()
+class Network(nn.Module):
+    def __init__(self):
+        super(Network, self).__init__()
+        self.conv1 = nn.Conv2d(1,10,3)
+        self.conv2 = nn.Conv2d(10,20,3)
+        self.conv3 = nn.Conv2d(20,30,3)
+        
+        self.pool = nn.MaxPool2d(2)
+        self.dropout = nn.Dropout2d(0.2)
+        
+        self.fc1 = nn.Linear(30*3*3, 270)
+        self.fc2 = nn.Linear(270,26)
+        
+        self.softmax = nn.LogSoftmax(dim=1)
+        
+    def forward(self,x):
+        x = self.conv1(x)
+        x = F.relu(x)
+        x = self.pool(x)
+        
+        x = self.conv2(x)
+        x = F.relu(x)
+        x = self.pool(x)
+        
+        x = self.conv3(x)
+        x = F.relu(x)
+        x = self.dropout(x)
+        
+        x = x.view(-1, 30 * 3 * 3)
+        x = F.relu(self.fc1(x))
+        x = self.softmax(F.relu(self.fc2(x)))
+        
+        return(x)
+        
+    def test(self, predictions,labels):
+        self.eval()
+        correct = 0
+        for p,l in zip(predictions,labels):
+            if p==l:
+                correct+=1
+        acc = correct/len(predictions)
+        return(acc, correct, len(predictions))
     
-    self.conv1 = nn.Sequential(
-        nn.Conv2d(1,80,kernel_size=5),
-        nn.BatchNorm2d(80),
-        nn.ReLU(),
-        nn.MaxPool2d(kernel_size=2,stride=2)
-    )
-    
-    self.conv2 = nn.Sequential(     
-        nn.Conv2d(80,80,kernel_size=5),
-        nn.BatchNorm2d(80),
-        nn.ReLU(),
-        nn.MaxPool2d(kernel_size=2,stride=2)
-    )
+    def evaluate(self, predictions,labels):
+        correct = 0
+        for p,l in zip(predictions,labels):
+            if p==l:
+                correct+=1
+        acc = correct/len(predictions)
+        return(acc)
+# load the model
 
-    self.fc1 = nn.Sequential(
-        nn.Linear(1280, 250),
-        nn.ReLU()
-    )
+torch.nn.Module.dump_patches = True
 
-    self.fc2 = nn.Sequential(
-        nn.Linear(250, 25),
-        nn.LogSoftmax(dim=1)
-    )
-
-
-  def forward(self,x):
-    x = self.conv2(self.conv1(x))
-    x = x.view(x.size(0), -1)
-    x = self.fc2(self.fc1)
-
-    return x
+device = torch.device("cpu")
+model = torch.load("model_trained.pt", map_location=device)
 # define a video capture object
 vid = cv2.VideoCapture(0)
 gray=None
-model = SignLangModel() 
-torch.save(model.state_dict(), 'model_trained.pt')
-model.load_state_dict(torch.load('model_trained.pt'))
+
 while(True):
       
     # Capture the video frame
     # by frame
     ret, frame = vid.read()
-  
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    frame = cv2.resize(frame, (28,28))
+    
     # Display the resulting frame
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    cv2.imshow('frame', gray)
-      
+    cv2.imshow('frame', frame)
+     
     # the 'q' button is set as the
     # quitting button you may use any
     # desired button of your choice
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-    print(gray.dtype)
-    converter = T.ToTensor()
-    gray = converter(gray)
-    print(gray.dtype)
-    gray = gray.unsqueeze(0)
-    print(gray.dtype)
-    out = model(gray)
 
+    #transform the image into a tensor and feed it into the model
+
+    #transform = T.ToTensor()
+    tensor = torch.from_numpy(frame).float()
+    print(tensor.type())
+    tensor = tensor[None, :]
+    print(tensor.size())
+    out = model(tensor)
+    print(out.size())
     probs, label = torch.topk(out, 25)
     pred = out.max(1, keepdim=True)[1]
-    print(chr(97+pred))
+    
+    _, index = torch.max(out, 1)
+    percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+
+
 # After the loop release the cap object
 vid.release()
 # Destroy all the windows
